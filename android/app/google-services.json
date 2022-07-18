@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "826137715722",
+    "project_id": "ingelt-app",
+    "storage_bucket": "ingelt-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826137715722:android:217114b5da11c3d3a8abf3",
+        "android_client_info": {
+          "package_name": "com.example.ingelt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "826137715722-0f1st6dsci1keu2ij5cgtre7b2938mdn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSSnmnnH7ryQsXrrBAXXvK4yq4bECHAvE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "826137715722-0f1st6dsci1keu2ij5cgtre7b2938mdn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
