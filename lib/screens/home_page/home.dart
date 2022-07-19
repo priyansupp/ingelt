@@ -1,48 +1,44 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:group_button/group_button.dart';
+import 'horizontal_groups.dart';
+import 'vertical_groups.dart';
 
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  final user = FirebaseAuth.instance.currentUser!;
 
   final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(70.0), // here the desired height
-          child: AppBar(
-            backgroundColor: Colors.white,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            color: Colors.white,
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+              children: <Widget>[
+                const Image(
+                  width: 70.0,
+                  height: 50.0,
+                  image: AssetImage(
+                      'assets/ingelt-logo.png'
                   ),
-                  child: const Image(
-                    width: 70.0,
-                    height: 50.0,
-                    image: AssetImage(
-                        'assets/ingelt-logo.png'
-                    ),
-                    color: Colors.white,
-                    fit: BoxFit.fill,
-                  ),
+                  fit: BoxFit.fill,
                 ),
+                const Spacer(),
                 Container(
                   height: 50.0,
-                  width: MediaQuery.of(context).size.width * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.6,
                   color: const Color(0xff00ff33),
                   child: TextField(
                     controller: _searchController,
@@ -62,21 +58,53 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                   ),
-                )
+                ),
+                const Spacer(),
+                IconButton(
+                  icon: Icon(
+                    Icons.chat_rounded,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  onPressed: () {},
+                ),
               ],
             ),
-            actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.chat_rounded,
-                  color: Theme.of(context).primaryColor,
-                ),
-                onPressed: () {  },
-              )
-            ],
+          ),
+          const SizedBox(height: 10.0,),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: const <Widget>[
+                HorGroup(),
+                HorGroup(),
+                HorGroup(),
+                HorGroup(),
+                HorGroup(),
+              ],
             ),
           ),
-        ),
-      );
+          const SizedBox(height: 10.0,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              GroupButton(
+                isRadio: true,
+                onSelected: (s, index,selected) => print('$s and $index and $selected'),   // here we fire the fetch
+                buttons: const ["Specific", "General"],
+              )
+            ],
+          ),
+          Column(
+            children: const <Widget>[
+              VerGroup(),
+              VerGroup(),
+              VerGroup(),
+              VerGroup(),
+              VerGroup(),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }

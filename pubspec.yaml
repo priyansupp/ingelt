@@ -39,6 +39,7 @@ dependencies:
   flutterfire_ui: ^0.4.2+3
   flutter_spinkit: ^5.1.0
   email_validator: ^2.0.1
+  group_button: ^5.0.1
 
 dev_dependencies:
   flutter_test:

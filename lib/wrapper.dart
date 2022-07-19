@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ingelt/screens/authentication/auth_route.dart';
-import 'package:ingelt/screens/home_page/home.dart';
+import 'package:ingelt/screens/routing.dart';
 import 'package:ingelt/shared/widgets/loading.dart';
 
 class Wrapper extends StatelessWidget {
@@ -16,7 +16,7 @@ class Wrapper extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Loading(message: '',);
           }else if(snapshot.hasData) {
-            return Home();
+            return BottomRouting();
           } else if(snapshot.hasError) {
             return const Text('Some Error Occurred. Please try again');
           } else {
