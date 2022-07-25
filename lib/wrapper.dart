@@ -16,7 +16,7 @@ class Wrapper extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Loading(message: '',);
           }else if(snapshot.hasData) {
-            return BottomRouting();
+            return const BottomRouting();
           } else if(snapshot.hasError) {
             return const Text('Some Error Occurred. Please try again');
           } else {

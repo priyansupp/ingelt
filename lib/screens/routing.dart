@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ingelt/screens/create_group_page/create_group.dart';
+import 'package:ingelt/screens/group_page/main_page.dart';
 import 'package:ingelt/screens/home_page/home.dart';
 import 'package:ingelt/screens/notifications_page/notifications.dart';
 import 'package:ingelt/screens/profile_page/profile.dart';
@@ -20,7 +20,7 @@ class _BottomRoutingState extends State<BottomRouting> {
 
   final screens = [
     const Home(),
-    const CreateGroup(),
+    const CreateGroupMainPage(),
     const Notifications(),
     const Profile(),
   ];
@@ -31,44 +31,40 @@ class _BottomRoutingState extends State<BottomRouting> {
       child: Scaffold(
         body: screens[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
+          items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: _selectedIndex == 0 ? Icon(
-                Icons.home_filled,
-                color: Theme.of(context).secondaryHeaderColor,
-              ) : Icon(
+              icon: Icon(
                 Icons.home_outlined,
-                color: Theme.of(context).primaryColor,
+              ),
+              activeIcon: Icon(
+                Icons.home_filled,
               ),
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: _selectedIndex == 1 ? Icon(
-                Icons.group_add_rounded,
-                color: Theme.of(context).secondaryHeaderColor,
-              ) : Icon(
+              icon: Icon(
                 Icons.group_add_outlined,
-                color: Theme.of(context).primaryColor,
               ),
-              label: "Create Group"
+              activeIcon: Icon(
+                Icons.group_add_rounded,
+              ),
+              label: "Groups"
             ),
             BottomNavigationBarItem(
-              icon: _selectedIndex == 2 ? Icon(
-                Icons.notifications_active,
-                color: Theme.of(context).secondaryHeaderColor,
-              ) : Icon(
+              icon: Icon(
                 Icons.notifications_active_outlined,
-                color: Theme.of(context).primaryColor,
+              ),
+              activeIcon: Icon(
+                Icons.notifications_active,
               ),
               label: "Notifications"
             ),
             BottomNavigationBarItem(
-              icon: _selectedIndex == 3 ? Icon(
-                Icons.person_pin_rounded,
-                color: Theme.of(context).secondaryHeaderColor,
-              ) : Icon(
+              icon: Icon(
                 Icons.person_pin_outlined,
-                color: Theme.of(context).primaryColor,
+              ),
+              activeIcon: Icon(
+                Icons.person_pin_rounded,
               ),
               label: "Profile"
             ),
@@ -76,6 +72,12 @@ class _BottomRoutingState extends State<BottomRouting> {
           currentIndex: _selectedIndex,
           selectedItemColor: Theme.of(context).secondaryHeaderColor,    // sets the color of underlying text when button is pressed
           onTap: _onItemTapped,
+          type: BottomNavigationBarType.fixed,
+          unselectedItemColor: Theme.of(context).primaryColor,    // color of the unselected icons
+          // unselectedItemColor: Colors.red,
+          selectedIconTheme: IconThemeData(
+            color: Theme.of(context).secondaryHeaderColor,
+          ),
         ),
         ),
       );

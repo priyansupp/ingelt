@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:group_button/group_button.dart';
+import 'package:ingelt/models/user_model.dart';
+import 'package:ingelt/screens/chat_page/chat.dart';
+import 'package:ingelt/screens/group_page/groups.dart';
 import 'horizontal_groups.dart';
 import 'vertical_groups.dart';
 
@@ -13,6 +16,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   final TextEditingController _searchController = TextEditingController();
+  final UserModel user = UserModel(id: '0', name: 'priyanshu', imageUrl: 'assets/person.jpg');
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class _HomeState extends State<Home> {
       child: Column(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
             color: Colors.white,
             child: Row(
               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -36,25 +40,34 @@ class _HomeState extends State<Home> {
                   fit: BoxFit.fill,
                 ),
                 const Spacer(),
-                Container(
-                  height: 50.0,
+                SizedBox(
+                  height: 45.0,
                   width: MediaQuery.of(context).size.width * 0.6,
-                  color: const Color(0xff00ff33),
                   child: TextField(
                     controller: _searchController,
                     textInputAction: TextInputAction.search,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
+                      fillColor: Colors.lightGreenAccent,
+                      filled: true,
                       prefixIcon: Icon(
                         Icons.search,
                         color: Theme.of(context).secondaryHeaderColor,
                       ),
                       hintText: 'Search here',
-                      focusedBorder: OutlineInputBorder(
+                      border: OutlineInputBorder(     // shows up always, with little light colored border. enabledBorder also always shows up but with dark colored border.
                         borderSide: BorderSide(
-                          color:  Theme.of(context).secondaryHeaderColor,
+                          color:  Theme.of(context).secondaryHeaderColor,   // border color
                           width: 1.0,
                         ),
+                        borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+                      ),
+                      focusedBorder: OutlineInputBorder(  // shows up only when input field is clicked.
+                        borderSide: BorderSide(
+                          color:  Theme.of(context).secondaryHeaderColor,   // border color
+                          width: 1.0,
+                        ),
+                        borderRadius: const BorderRadius.all(Radius.circular(15.0)),
                       ),
                     ),
                   ),
@@ -65,7 +78,9 @@ class _HomeState extends State<Home> {
                     Icons.chat_rounded,
                     color: Theme.of(context).primaryColor,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Groups()));
+                  },
                 ),
               ],
             ),
