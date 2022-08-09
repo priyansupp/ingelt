@@ -16,7 +16,7 @@ class _BottomRoutingState extends State<BottomRouting> {
   final user = FirebaseAuth.instance.currentUser!;
 
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 3;
 
   final screens = [
     const Home(),
