@@ -76,7 +76,7 @@ class _GroupChatState extends State<GroupChat> {
                 itemCount: messages.length,
                 itemBuilder: (BuildContext context, int index) {
                   final MessageModel message = messages[index];
-                  final bool isMe = message.sender.id == widget.group.admin.id;
+                  final bool isMe = message.sender.uid == widget.group.admin.uid;
                   final double gapBySide = MediaQuery.of(context).size.width * 0.3;
                   return _buildMessage(message, isMe, gapBySide);
                 },

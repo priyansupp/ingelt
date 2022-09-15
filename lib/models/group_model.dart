@@ -12,45 +12,46 @@ class GroupModel {
 
 // USERS
 final UserModel priyanshu = UserModel(
-  id: '0',
-  name: 'Current User',
-  imageUrl: 'assets/person.jpg',
+  uid: '0',
+  displayName: 'Priyanshu',
+  photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
 );
 final UserModel greg = UserModel(
-  id: '1',
-  name: 'Greg',
-  imageUrl: 'assets/person.jpg',
+  uid: '1',
+  displayName: 'Greg',
+  photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
 );
 final UserModel james = UserModel(
-  id: '2',
-  name: 'James',
-  imageUrl: 'assets/person.jpg',
+  uid: '2',
+  displayName: 'James',
+  photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
 );
 final UserModel john = UserModel(
-  id: '3',
-  name: 'John',
-  imageUrl: 'assets/person.jpg',
+  uid: '3',
+  displayName: 'John',
+  photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
 );
 final UserModel olivia = UserModel(
-  id: '4',
-  name: 'Olivia',
-  imageUrl: 'assets/person.jpg',
+  uid: '4',
+  displayName: 'Olivia',
+  photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
 );
 final UserModel sam = UserModel(
-  id: '5',
-  name: 'Sam',
-  imageUrl: 'assets/person.jpg',
+  uid: '5',
+  displayName: 'Sam',
+  photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
 );
 final UserModel sophia = UserModel(
-  id: '6',
-  name: 'Sophia',
-  imageUrl: 'assets/person.jpg',
+  uid: '6',
+  displayName: 'Sophia',
+  photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
 );
 final UserModel steven = UserModel(
-  id: '7',
-  name: 'Steven',
-  imageUrl: 'assets/person.jpg',
+  uid: '7',
+  displayName: 'Steven',
+  photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
 );
+
 
 List<GroupModel> groups = [
   GroupModel(name: 'GST', id: '0', admin: priyanshu, time: '1:20 PM', imageUrl: 'assets/group.png'),

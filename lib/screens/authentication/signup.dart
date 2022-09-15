@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ingelt/services/database.dart';
 import 'package:ingelt/shared/constants.dart';
 import 'package:ingelt/shared/widgets/loading.dart';
 import 'package:ingelt/shared/utils.dart';
@@ -14,6 +16,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
+  // final user = FirebaseAuth.instance.currentUser!;
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -295,7 +299,7 @@ class _SignUpState extends State<SignUp> {
                   shape: const StadiumBorder(),
                 ),
               ),
-              const SizedBox(height: 20.0,),
+              const SizedBox(height: 72.0,),
               Divider(
                 color: Theme.of(context).colorScheme.primary,
               ),
@@ -327,7 +331,9 @@ class _SignUpState extends State<SignUp> {
     setState(() => loading = true);
 
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailController.text.trim(), password: _passwordController.text.trim());
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailController.text.trim(), password: _passwordController.text.trim());
+      User? user = userCredential.user;
+      await DatabaseService(uid: user!.uid).updateUserData(_emailController.text.trim(), _nameController.text, null, _phoneController.text);
     } on FirebaseAuthException catch(e) {
       setState(() => loading = false);
       // print('Couldn\'t Sign up with those credentials.');
