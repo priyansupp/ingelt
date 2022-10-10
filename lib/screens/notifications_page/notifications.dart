@@ -11,14 +11,14 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
-    // return ElevatedButton(
-    //   onPressed: () {
-    //     FirebaseAuth.instance.signOut();
-    //   },
-    //   child: Text(
-    //     'logout'
-    //   ),
-    // );
+    return ElevatedButton(
+      onPressed: () {
+        FirebaseAuth.instance.signOut();
+      },
+      child: Text(
+        'logout'
+      ),
+    );
     return Column(
       children: [
         Container(
@@ -44,22 +44,18 @@ class _NotificationsState extends State<Notifications> {
                     'assets/ingelt-logo.png'
                 ),
                 fit: BoxFit.fill,
+                color: Color(0xFF5A5A5A),
               ),
+              SizedBox(height: 10.0,),
               Text(
-                'Notifications',
+                ' Notifications',
                 style: TextStyle(
-                    fontSize: 17.5,
+                    fontSize: 22,
                     fontWeight: FontWeight.w600,
-                    height: -0.01
+                    height: -0.01,
+                  color: Color(0xFF5A5A5A),
                 ),
               ),
-              SizedBox(
-                width: 110.0,
-                child: Divider(
-                  thickness: 1.0,
-                  color: Colors.black,
-                ),
-              )
             ],
           ),
         ),
@@ -112,7 +108,7 @@ class _NotifState extends State<Notif> {
                 backgroundImage: AssetImage(
                   'assets/analytics.jpg',
                 ),
-                radius: 27.5,
+                radius: 25,
               ),
 
               const SizedBox(width: 10.0,),

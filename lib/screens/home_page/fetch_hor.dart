@@ -17,7 +17,7 @@ class _FetchHorState extends State<FetchHor> {
       // ),
       padding: const EdgeInsets.all(0),
       scrollDirection: Axis.horizontal,
-      itemExtent: 270.0,  // to fix the width of each item
+      itemExtent: 220.0,  // to fix the width of each item
       children: const <Widget>[
         HorGroup(),
         HorGroup(),

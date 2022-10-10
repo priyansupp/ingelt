@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ingelt/screens/chat_page/chat.dart';
 import 'package:ingelt/screens/chat_page/main_page.dart';
 import 'package:ingelt/screens/group_page/main_page.dart';
 import 'package:ingelt/screens/home_page/home.dart';
@@ -24,7 +23,6 @@ class _BottomRoutingState extends State<BottomRouting> {
 
   final screens = [
     const Home(),
-    // ChatScreen(user: userrrrr),
     const ChatPage(),
     const CreateGroupMainPage(),
     const Notifications(),

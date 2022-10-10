@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ingelt/models/user_model.dart';
 import 'package:ingelt/screens/group_page/admin.dart';
-import 'package:ingelt/screens/group_page/groups.dart';
+import 'package:ingelt/screens/group_page/ally.dart';
+import 'package:ingelt/screens/group_page/request.dart';
 
 import '../home_page/vertical_groups.dart';
 import 'create_group.dart';
@@ -16,7 +17,7 @@ class CreateGroupMainPage extends StatefulWidget {
 class _CreateGroupMainPageState extends State<CreateGroupMainPage> with TickerProviderStateMixin {
 
   late TabController _tabController;
-  bool adminGroupCreated = false;
+  bool adminGroupCreated = true;
 
 
   @override
@@ -49,42 +50,38 @@ class _CreateGroupMainPageState extends State<CreateGroupMainPage> with TickerPr
               )
           ),
           width: MediaQuery.of(context).size.width,
-          height: 80.0,
+          height: 60.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: const [
                   Image(
-                    width: 100.0,
+                    width: 90.0,
                     height: 60.0,
                     image: AssetImage(
                         'assets/ingelt-logo.png'
                     ),
                     fit: BoxFit.fill,
+                    color: Color(0xEE5A5A5A),
                   ),
+                  SizedBox(width: 5.0,),
                   Text(
-                    'Discussion',
+                    'Connect',
                     style: TextStyle(
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w600,
-                      height: -0.01
+                      fontSize: 22,
+                      fontWeight: FontWeight.w900,
+                      height: -1.0
                     ),
                   ),
-                  SizedBox(
-                    width: 110.0,
-                    child: Divider(
-                      thickness: 1.0,
-                      color: Colors.black,
-                    ),
-                  )
                 ],
               ),
 
               IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.more_vert_rounded),
-                color: Colors.black,
+                color: const Color(0xEE5A5A5A),
                 iconSize: 30.0,
               )
             ],
@@ -105,9 +102,9 @@ class _CreateGroupMainPageState extends State<CreateGroupMainPage> with TickerPr
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             // labelColor: Theme.of(context).colorScheme.primary,
             labelStyle: const TextStyle(
-                fontSize: 23.0,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey
+                fontSize: 18.0,
+                fontWeight: FontWeight.w800,
+              color: Color(0xEE5A5A5A),
             ),
             indicatorColor: Theme.of(context).colorScheme.primary,
             indicatorWeight: 2.5,
@@ -118,10 +115,10 @@ class _CreateGroupMainPageState extends State<CreateGroupMainPage> with TickerPr
                 text: 'Admin',
               ),
               Tab(
-                text: 'Ally',
+                text: 'Allies',
               ),
               Tab(
-                text: 'Request',
+                text: 'Requests',
               ),
             ],
           ),
@@ -130,7 +127,7 @@ class _CreateGroupMainPageState extends State<CreateGroupMainPage> with TickerPr
 
         SizedBox(
           width: double.maxFinite,
-          height: MediaQuery.of(context).size.height - 213,
+          height: MediaQuery.of(context).size.height - 193,
           // height: 1000.0,
           child: TabBarView(
             controller: _tabController,
@@ -158,17 +155,22 @@ class _CreateGroupMainPageState extends State<CreateGroupMainPage> with TickerPr
                               ),
                               const SizedBox(height: 20.0,),
                               SizedBox(
-                                height: 50.0,
-                                width: 140.0,
+                                height: 40.0,
+                                width: 130.0,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     shape: const StadiumBorder()
                                   ),
                                   onPressed: () {
                                     showModalBottomSheet<void>(
+                                      isScrollControlled: true,
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return const CreateGroup();
+                                          return Wrap(    // to control height of the modalsheetbottom(according to its content)
+                                            children: const [
+                                              CreateGroup(),
+                                            ],
+                                          );
                                         },
                                     );
                                   },
@@ -194,14 +196,20 @@ class _CreateGroupMainPageState extends State<CreateGroupMainPage> with TickerPr
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Previous Groups',
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                    letterSpacing: 1.0
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    'Accomplishments',
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        letterSpacing: 1.0
+                                    ),
+                                  ),
+                                  IconButton(onPressed: () {}, icon: Icon(Icons.search))
+                                ],
                               ),
 
                               SizedBox(
@@ -213,7 +221,7 @@ class _CreateGroupMainPageState extends State<CreateGroupMainPage> with TickerPr
                                     return Row(
                                       // mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        Transform.scale(scale: 0.8, alignment: Alignment.centerLeft, child: const VerGroup(date: '22nd July 2022', desc: "Ather's smart electric scooters with best-in-class settings to deal with.", category: 'Automobile', admin: 'Priyanshu Jaiswal', adminDesc: 'An aspiring app developer, and a web developer in making')),
+                                        Transform.scale(scale: 0.8, alignment: Alignment.centerLeft, child: const VerGroup(date: '22nd July 2022', desc: "Ather's smart electric scooters with best-in-class settings to deal with.", category: 'Automobile', admin: 'Priyanshu Jaiswal', adminDesc: 'An aspiring app developer, and a web developer in making', onHomePage: false,)),
                                         // SizedBox(width: 10.0,),
                                       ],
                                     );
@@ -253,8 +261,8 @@ class _CreateGroupMainPageState extends State<CreateGroupMainPage> with TickerPr
               //     ),
               //   ),
               // ),
-              const Text('ally'),
-              const Text('request')
+              const Ally(),
+              const Request()
             ],
           ),
         ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class ResearchBar extends StatefulWidget {
-  final double percentage;
+  final int percentage;
   final String text;
   const ResearchBar({Key? key, required this.percentage, required this.text}) : super(key: key);
 
@@ -17,8 +17,8 @@ class _ResearchBarState extends State<ResearchBar> {
       children: [
         Container(
           // color: Theme.of(context).scaffoldBackgroundColor,
-          width: MediaQuery.of(context).size.width * 0.75,
-          height: 33.0,
+          width: MediaQuery.of(context).size.width * 0.80,
+          height: 25.0,
           decoration: const BoxDecoration(
             color: Colors.grey,
             borderRadius: BorderRadius.all(Radius.circular(50.0)),
@@ -36,9 +36,9 @@ class _ResearchBarState extends State<ResearchBar> {
             child: Text(
               widget.text,
               style: const TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600,
-                  fontSize: 15.0
+                  fontSize: 12
               ),
             ),
           ),
@@ -49,7 +49,7 @@ class _ResearchBarState extends State<ResearchBar> {
           '${widget.percentage}%',
           style: const TextStyle(
               color: Colors.black,
-              fontSize: 20.0,
+              fontSize: 15.0,
               fontWeight: FontWeight.bold
           ),
         )

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/user_model.dart';
-import 'chat.dart';
+import 'direct_msg.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -33,141 +33,137 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(
-                        'assets/home_title_bg.jpg',
-                      ),
-                      opacity: 0.15,
-                      fit: BoxFit.cover
-                  )
-              ),
-              width: MediaQuery.of(context).size.width,
-              height: 80.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Image(
-                    width: 100.0,
-                    height: 60.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            decoration: const BoxDecoration(
+                image: DecorationImage(
                     image: AssetImage(
-                        'assets/ingelt-logo.png'
+                      'assets/home_title_bg.jpg',
                     ),
-                    fit: BoxFit.fill,
+                    opacity: 0.15,
+                    fit: BoxFit.cover
+                )
+            ),
+            width: MediaQuery.of(context).size.width,
+            height: 80.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Image(
+                  width: 85.0,
+                  height: 50.0,
+                  image: AssetImage(
+                      'assets/ingelt-logo.png'
                   ),
+                  fit: BoxFit.fill,
+                  color: Color(0xEE5A5A5A),
+                ),
 
-                  Expanded(
-                    child: Material(
-                      elevation: 2.0,
-                      shadowColor: Colors.grey,
-                      shape: const StadiumBorder(),
-                      // borderRadius: const BorderRadius.all(Radius.circular(40.0)),
-                      child: SizedBox(
-                        height: 33.0,
-                        child: TextField(
-                          controller: _searchController,
-                          textInputAction: TextInputAction.search,
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.only(left: 40.0, right: 10.0),
-                                child: Icon(
-                                  Icons.search,
-                                  color: Theme.of(context).secondaryHeaderColor,
-                                  size: 20.0,
-                                ),
+                Expanded(
+                  child: Material(
+                    elevation: 2.0,
+                    shadowColor: Colors.grey,
+                    shape: const StadiumBorder(),
+                    // borderRadius: const BorderRadius.all(Radius.circular(40.0)),
+                    child: SizedBox(
+                      height: 30.0,
+                      child: TextField(
+                        controller: _searchController,
+                        textInputAction: TextInputAction.search,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            filled: true,
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.only(left: 40.0, right: 10.0),
+                              child: Icon(
+                                Icons.search,
+                                color: Theme.of(context).secondaryHeaderColor,
+                                size: 20.0,
                               ),
-                              hintText: 'Seach Chat',
-                              hintStyle: const TextStyle(
-                                fontSize: 16.0,
+                            ),
+                            hintText: 'Search Chat',
+                            hintStyle: const TextStyle(
+                              fontSize: 16.0,
+                            ),
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 0.0,
+                                  style: BorderStyle.none
                               ),
-                              border: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 0.0,
-                                    style: BorderStyle.none
-                                ),
-                                borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                              borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 0.0,
+                                  style: BorderStyle.none
                               ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 0.0,
-                                    style: BorderStyle.none
-                                ),
-                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              )
+                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                            )
 
-                          ),
                         ),
                       ),
                     ),
                   ),
-
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.more_vert_rounded),
-                    color: Colors.black,
-                    iconSize: 30.0,
-                  )
-                ],
-              ),
-            ),
-
-            Container(
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(
-                        'assets/home_title_bg.jpg',
-                      ),
-                      opacity: 0.15,
-                      fit: BoxFit.cover
-                  )
-              ),
-              child: TabBar(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                // labelColor: Theme.of(context).colorScheme.primary,
-                labelStyle: const TextStyle(
-                    fontSize: 23.0,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey
                 ),
-                indicatorColor: Theme.of(context).colorScheme.primary,
-                indicatorWeight: 2.5,
-                controller: _tabController,
-                // onTap: () {},
-                tabs: const <Widget>[
-                  Tab(
-                    text: 'Chat',
-                  ),
-                  Tab(
-                    text: 'Message',
-                  ),
-                ],
-              ),
+
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.more_vert_rounded),
+                  color: Colors.black,
+                  iconSize: 30.0,
+                )
+              ],
             ),
+          ),
+
+          Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      'assets/home_title_bg.jpg',
+                    ),
+                    opacity: 0.15,
+                    fit: BoxFit.cover
+                )
+            ),
+            child: TabBar(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              // labelColor: Theme.of(context).colorScheme.primary,
+              labelStyle: const TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey
+              ),
+              indicatorColor: Theme.of(context).colorScheme.primary,
+              indicatorWeight: 2.5,
+              controller: _tabController,
+              // onTap: () {},
+              tabs: const <Widget>[
+                Tab(
+                  text: 'Chat',
+                ),
+                Tab(
+                  text: 'Message',
+                ),
+              ],
+            ),
+          ),
 
 
-            SizedBox(
-              width: double.maxFinite,
-              height: double.maxFinite,
-              // height: 1000.0,
-              child: TabBarView(
-                controller: _tabController,
-                children: const [
-                  FetchChats(),
-                  FetchMessages(),
-                ],
-              ),
+          Expanded(     // gives all the remaining space on the screen to the scrollable list. If made into sizedbox of height = 200, whole of theb list will render in a abox of size 200px
+            child: TabBarView(
+              controller: _tabController,
+              children: const [
+                FetchChats(),
+                FetchMessages(),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -183,16 +179,14 @@ class FetchChats extends StatefulWidget {
 class _FetchChatsState extends State<FetchChats> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      itemBuilder: (context, index) {
-      return Column(
-        children: const [
-          Conversation(name: 'Riya', lastMessage: 'okk i will call you'),
-        ],
-      );
-    },
-    itemCount: 12,
+    return Container(
+      width: MediaQuery.of(context).size.width*0.8,
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+        return const Conversation(name: 'Riya', lastMessage: 'okk i will call you');
+      },
+      itemCount: 12,
+      ),
     );
   }
 }
@@ -232,7 +226,7 @@ class _ConversationState extends State<Conversation> {
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreen(user: userrrrr),));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => DM(user: userrrrr),));
       },
       child: Column(
         children: [

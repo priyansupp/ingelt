@@ -1,11 +1,7 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:ingelt/models/user_model.dart';
 import 'package:ingelt/screens/profile_page/research_exp.dart';
 import 'package:ingelt/screens/profile_page/research_bar.dart';
@@ -39,54 +35,7 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  // image
-  PlatformFile? pickedFile;
-  UploadTask? uploadTask;
-
-  Future uploadImage(FilePickerResult result) async{
-    // final path = result.files.single.path;
-    final fileName = result.files.first.name;
-    // print(path);     // complete path of the picked file
-    // print(fileName);    // just the name and extension of the picked file.
-
-    final destination = 'user/$fileName';
-    final file = File(pickedFile!.path!);
-
-    final ref = FirebaseStorage.instance.ref().child(destination);
-    uploadTask = ref.putFile(file);
-
-    final snapshot = await uploadTask!.whenComplete(() => {});
-
-    final urlDownload = await snapshot.ref.getDownloadURL();
-
-    final documentReference = FirebaseFirestore.instance.collection('users').doc(generalUser.uid);
-    final documentSnapshot = await documentReference.update(
-      {
-        'photoURL': urlDownload
-      }
-    );
-    setState(() {
-
-    });
-  }
-
-  Future pickImage(ImageSource s) async {
-    try {
-
-      final result = await FilePicker.platform.pickFiles(allowMultiple: false);
-      if(result == null) return;
-
-      setState(() {
-        pickedFile = result.files.first;
-      });
-
-      await uploadImage(result);
-    } on PlatformException catch(e) {
-      Utils.showSnackBar('Failed to pick an image: $e');
-    }
-  }
-
-  double percentage = 40;
+  int percentage = 40;
 
   @override
   Widget build(BuildContext context) {
@@ -111,29 +60,29 @@ class _ProfileState extends State<Profile> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          SizedBox(
-                            height: 220.0,
+                          Container(
+                            height: 185.0,
                             width: MediaQuery.of(context).size.width,
-                            // color: Theme.of(context).scaffoldBackgroundColor,
+                            // color: Colors.blue,
                             child: Stack(
                               children: <Widget>[
                                 Container(
-                                  height: 150.0,
+                                  height: 120.0,
                                   width: MediaQuery.of(context).size.width,
                                   color: Colors.red,
                                 ),
                                 Positioned(
-                                    top: 75.0,
+                                    top: 60.0,
                                     left: 18.0,
                                     child: CircleAvatar(
                                       backgroundColor: Colors.white,
-                                      radius: 70.0,
+                                      radius: 60.0,
                                       child: user!.photoURL != null ?
                                       ClipOval(
                                         child: Image.network(
                                           user.photoURL!,
-                                          width: 130.0,
-                                          height: 130.0,
+                                          width: 115.0,
+                                          height: 115.0,
                                           fit: BoxFit.cover,
                                         ),
                                       )
@@ -149,70 +98,15 @@ class _ProfileState extends State<Profile> {
                                     )
                                 ),
 
-                                user.photoURL == null? Positioned(
-                                  top: 178.0,
-                                  left: 127.0,
-                                  child: SizedBox(
-                                    height: 45.0,
-                                    width: 45.0,
-                                    // decoration: const BoxDecoration(
-                                    //     borderRadius: BorderRadius.all(Radius.circular(100.0)),
-                                    //     // border: Border.all(color: Colors.black, width: 2.0),
-                                    //     color: Colors.white
-                                    // ),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        showModalBottomSheet<void>(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return Container(
-                                                height: 300.0,
-                                                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                                                child: Center(
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        children: [
-                                                          ElevatedButton(onPressed: () {
-                                                            pickImage(ImageSource.gallery);
-                                                            Navigator.of(context).pop();
-                                                          }, child: const Text('Choose from gallery')),
-                                                          const SizedBox(width: 20.0,),
-                                                          ElevatedButton(onPressed: () {
-                                                            pickImage(ImageSource.camera);
-                                                            Navigator.of(context).pop();
-                                                          }, child: const
-                                                          Text('Click a photo')),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(height: 50.0,),
-                                                      // ElevatedButton(onPressed: () {
-                                                      //   setState(() {
-                                                      //     image = null;
-                                                      //   });
-                                                      //   Navigator.of(context).pop();
-                                                      // }, child: const
-                                                      // Text('Remove photo')),
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                        );
-                                      },
-                                      icon: const Icon(
-                                        Icons.add_circle,
-                                      ),
-                                      // size: 25.0,
-                                      color: Theme.of(context).colorScheme.primary,
-                                    ),
-                                  ),
-                                ) : const SizedBox(),
+                                const Positioned(
+                                  left: 125.0,
+                                  top: 145.0,
+                                  child: Icon(Icons.verified, color: Colors.blue,),
+                                ),
+
                                 Positioned(
-                                  top: 160.0,
-                                  right: 20.0,
+                                  top: 120.0,
+                                  right: 10.0,
                                   child: IconButton(
                                     icon: const Icon(Icons.settings),
                                     onPressed: () {
@@ -252,7 +146,7 @@ class _ProfileState extends State<Profile> {
                                 Text(
                                   user.displayName,
                                   style: const TextStyle(
-                                      fontSize: 22.5,
+                                      fontSize: 18,
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold
                                   ),
@@ -260,11 +154,11 @@ class _ProfileState extends State<Profile> {
                                 const Text(
                                   'Co-founder: Ingelt',
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 13,
                                     color: Colors.black,
                                   ),
                                 ),
-                                const SizedBox(height: 13.0,),
+                                const SizedBox(height: 5.0,),
                                 const Text(
                                   'IIT Guwahati',
                                   style: TextStyle(
@@ -276,7 +170,7 @@ class _ProfileState extends State<Profile> {
                                 const Text(
                                   'New Delhi, Delhi, India',
                                   style: TextStyle(
-                                    fontSize: 13.0,
+                                    fontSize: 11.0,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -289,7 +183,7 @@ class _ProfileState extends State<Profile> {
                                 //       color: Theme.of(context).colorScheme.primary,
                                 //   ),
                                 // ),
-                                const SizedBox(height: 15.0,),
+                                // const SizedBox(height: 8.0,),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -299,27 +193,41 @@ class _ProfileState extends State<Profile> {
                                       onPressed: () {},
                                       style: ElevatedButton.styleFrom(
                                           primary: Theme.of(context).colorScheme.secondary,
-                                          minimumSize: Size(MediaQuery.of(context).size.width * 0.35, 40.0),
+                                          minimumSize: Size(MediaQuery.of(context).size.width * 0.35, 32.0),
                                           shape: const StadiumBorder()
                                       ),
-                                      child: const Text('Connect'),
+                                      child: const Text(
+                                          'Connect',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          letterSpacing: 1.0,
+                                          fontSize: 16.0
+                                        ),
+                                      ),
                                     ),
                                     const SizedBox(width: 10.0,),
                                     OutlinedButton(
                                       onPressed: () {},
                                       style: OutlinedButton.styleFrom(
                                           primary: Theme.of(context).colorScheme.secondary,
-                                          minimumSize: Size(MediaQuery.of(context).size.width * 0.35, 40.0),
+                                          minimumSize: Size(MediaQuery.of(context).size.width * 0.35, 32.0),
                                           side: BorderSide(
                                             color: Theme.of(context).colorScheme.secondary,
                                           ),
                                           shape: const StadiumBorder()        // creates rounded borders
                                       ),
-                                      child: const Text('Message'),
+                                      child: const Text(
+                                          'Message',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            letterSpacing: 1.0,
+                                            fontSize: 16.0
+                                        ),
+                                      ),
                                     ),
                                     const SizedBox(width: 10.0,),
                                     Container(
-                                      height: 40.0,
+                                      height: 32.0,
                                       width: MediaQuery.of(context).size.width * 0.15,
                                       decoration: BoxDecoration(
                                         border: Border.all(width: 1.0, color: Theme.of(context).colorScheme.secondary),
@@ -337,32 +245,32 @@ class _ProfileState extends State<Profile> {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 15.0,),
+                          const SizedBox(height: 4.0,),
                         ],
                       ),
                     ),
 
-                    const SizedBox(height: 13.0,),
+                    const SizedBox(height: 7.0,),
 
                     // Research Area container
                     Container(
                       color: Colors.white,
                       width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.only(left: 20.0, top: 20.0, bottom: 20.0),
+                      padding: const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 15.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
                           Text(
-                            'RESEARCH AREA',
+                            'FORTE',
                             style: TextStyle(
-                                fontSize: 20.0,
+                                fontSize: 16.0,
                                 fontWeight: FontWeight.w900,
-                                letterSpacing: 2.5,
+                                letterSpacing: 1.5,
                                 color: Colors.black
                             ),
                           ),
-                          SizedBox(height: 20.0,),
+                          SizedBox(height: 10.0,),
                           ResearchBar(text: 'GRAPHIC DESIGN', percentage: 40,),
                           SizedBox(height: 12.0,),
                           ResearchBar(text: 'MARKETING', percentage: 60,),
@@ -373,24 +281,24 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
 
-                    const SizedBox(height: 13.0,),
+                    const SizedBox(height: 7.0,),
 
                     // Working container
                     Container(
                       color: Colors.white,
                       width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.only(left: 20.0, top: 10.0, bottom: 10.0, right: 10.0),
+                      padding: const EdgeInsets.only(left: 20.0, top: 0.0, bottom: 10.0, right: 10.0),
                       child: Column(
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                'FORTE',
+                                'WORKING',
                                 style: TextStyle(
-                                    fontSize: 20.0,
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.w900,
-                                    letterSpacing: 2.5,
+                                    letterSpacing: 1.5,
                                     color: Colors.black
                                 ),
                               ),
@@ -402,14 +310,16 @@ class _ProfileState extends State<Profile> {
                             style: TextStyle(
                                 fontSize: 15.0,
                                 letterSpacing: 0.0,
-                                color: Colors.black
+                                color: Colors.black,
+                              overflow: TextOverflow.ellipsis
                             ),
+                            maxLines: 5,
                           )
                         ],
                       ),
                     ),
 
-                    const SizedBox(height: 13.0,),
+                    const SizedBox(height: 7.0,),
 
                     // Featured container
                     Container(
@@ -425,13 +335,13 @@ class _ProfileState extends State<Profile> {
                                 const Text(
                                   'FEATURED',
                                   style: TextStyle(
-                                      fontSize: 20.0,
+                                      fontSize: 16.0,
                                       fontWeight: FontWeight.w900,
-                                      letterSpacing: 2.5,
+                                      letterSpacing: 1.5,
                                       color: Colors.black
                                   ),
                                 ),
-                                IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded), iconSize: 35.0,)
+                                IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded), iconSize: 25.0,)
                               ],
                             ),
                           ),
@@ -451,7 +361,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
 
-                    const SizedBox(height: 13.0,),
+                    const SizedBox(height: 7.0,),
 
                     // Research Experience container
                     Container(
@@ -466,9 +376,9 @@ class _ProfileState extends State<Profile> {
                               const Text(
                                 'RESEARCH EXPERIENCE',
                                 style: TextStyle(
-                                    fontSize: 20.0,
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.w900,
-                                    letterSpacing: 2.5,
+                                    letterSpacing: 1.5,
                                     color: Colors.black
                                 ),
                               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ingelt/shared/widgets/rating.dart';
 
 class ResearchExp extends StatefulWidget {
   final String topic;
@@ -76,41 +77,7 @@ class _ResearchExpState extends State<ResearchExp> {
                 ),
               ),
               const SizedBox(width: 13.0,),
-              Stack(
-                children: [
-                  CircleAvatar(
-                    radius: 21.0,
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    child: const CircleAvatar(
-                      radius: 18.0,
-                      backgroundColor: Colors.white,
-                      child: CircleAvatar(
-                        radius: 15.0,
-                        backgroundColor: Colors.orange,
-                        child: CircleAvatar(
-                          radius: 12.0,
-                          backgroundColor: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 10.0,
-                    right: 0.0,
-                    child: Container(
-                      color: Colors.white,
-                      child: Text(
-                        '${widget.percentage}',
-                        style: const TextStyle(
-                          fontSize: 19.0,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+              Rating(percentage: widget.percentage),
               const SizedBox(width: 20.0,),   // gap after the rating-circle
             ],
           )
