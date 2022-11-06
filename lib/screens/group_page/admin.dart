@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ingelt/shared/widgets/circular_pic.dart';
 import 'package:ingelt/shared/widgets/group_goals.dart';
-
+import 'package:ingelt/shared/constants.dart';
 import '../home_page/vertical_groups.dart';
+import 'create_group.dart';
 
 class Admin extends StatefulWidget {
   const Admin({Key? key}) : super(key: key);
@@ -13,6 +14,8 @@ class Admin extends StatefulWidget {
 
 class _AdminState extends State<Admin> {
 
+  bool adminGroupCreated = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +24,22 @@ class _AdminState extends State<Admin> {
       scrollDirection: Axis.vertical,
       child: Column(
         children: [
-          Container(
+            adminGroupCreated == true ? Container(
             color: Colors.white,
             padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
                       'Growth Goals',
                       style: TextStyle(
                           fontSize: 27.0,
                           fontWeight: FontWeight.w600,
-                          color: Colors.black,
+                          color: AppThemeData.blackishTextColor,
                         letterSpacing: 1.0
                       ),
                     ),
@@ -46,11 +48,12 @@ class _AdminState extends State<Admin> {
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16.0,
-                        color: Colors.black
+                        color: AppThemeData.blackishTextColor,
                       ),
                     )
                   ],
                 ),
+
                 const SizedBox(
                   width: 170.0,
                   child: Divider(
@@ -61,15 +64,15 @@ class _AdminState extends State<Admin> {
 
                 const SizedBox(height: 2.0,),
 
-                const Text(
+                Text(
                   'brebv eic eiv efhekr vervruif ewkf ewfe wkf iewf euwif ewiuf ewubfuiwbfiu wiu wui dwueib briurew ruirwb3 o3  weiub aneoi 3e9h3ih3ir38yrhyowye i3.',
                   style: TextStyle(
-                    letterSpacing: 0.5,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black87,
-                    overflow: TextOverflow.ellipsis,
-                    height: 1.2   // controls line height
+                      letterSpacing: 0.5,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                      color: AppThemeData.blackishTextColor,
+                      overflow: TextOverflow.ellipsis,
+                      height: 1.2   // controls line height
                   ),
                   maxLines: 4,
                 ),
@@ -78,14 +81,12 @@ class _AdminState extends State<Admin> {
 
                 const GroupGoals(growthCount: 4,),
 
-
-
-                const Text(
+                Text(
                   'Spotlight',
                   style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w600,
-                      color: Colors.black,
+                      color: AppThemeData.blackishTextColor,
                       letterSpacing: 1.0
                   ),
                 ),
@@ -107,6 +108,57 @@ class _AdminState extends State<Admin> {
                 const SizedBox(height: 2.0,),
               ],
             ),
+          ) : Container(
+            height: 470.0,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 40.0,),
+                const Text(
+                  'Make Your Own Niche',
+                  style: TextStyle(
+                      fontSize: 17.5,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+                const SizedBox(height: 20.0,),
+                SizedBox(
+                  height: 40.0,
+                  width: 130.0,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: const StadiumBorder()
+                    ),
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                        ),
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Wrap(    // to control height of the modalsheetbottom(according to its content)
+                            children: const [
+                              CreateGroup(),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: const Text(
+                      'Create',
+                      style: TextStyle(
+                          fontSize: 23.0,
+                          fontWeight: FontWeight.w500
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
 
           const SizedBox(height: 7.0,),    // greyish gap in between Active and Previous Groups
@@ -121,12 +173,12 @@ class _AdminState extends State<Admin> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'Accomplishments',
                       style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.w600,
-                          color: Colors.black,
+                          color: AppThemeData.blackishTextColor,
                           letterSpacing: 1.0
                       ),
                     ),
@@ -174,4 +226,3 @@ class ShowActive extends StatelessWidget {
     );
   }
 }
-

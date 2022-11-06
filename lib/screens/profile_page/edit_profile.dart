@@ -9,6 +9,7 @@ import '../../shared/utils.dart';
 import '../../shared/widgets/circular_pic.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:ingelt/shared/constants.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -131,12 +132,12 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                             width: MediaQuery.of(context).size.width,
                             height: 130.0,
-                            child: const Text(
+                            child: Text(
                               'Edit Profile',
                               style: TextStyle(
                                 fontSize: 25.0,
                                 fontWeight: FontWeight.w900,
-                                color: Colors.black,
+                                color: AppThemeData.blackishTextColor
                               ),
                             ),
                           ),
@@ -169,9 +170,9 @@ class _EditProfileState extends State<EditProfile> {
                                     :
                                 IconButton(
                                   onPressed: () {},
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.photo_camera,
-                                    color: Colors.black,
+                                    color: AppThemeData.blackishTextColor,
                                   ),
                                   iconSize: 70.0,
                                 ),
@@ -231,7 +232,7 @@ class _EditProfileState extends State<EditProfile> {
                                   Icons.add_circle,
                                   size: 23.0,
                                 ),
-                                color: Theme.of(context).colorScheme.primary,
+                                color: AppThemeData.primaryAppColor
                               ),
                             ),
                           ),
@@ -255,7 +256,9 @@ class _EditProfileState extends State<EditProfile> {
                       width: 130.0,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            shape: const StadiumBorder()
+                            shape: const StadiumBorder(),
+                          backgroundColor: AppThemeData.primaryAppColor,
+                          foregroundColor: Colors.white
                         ),
                         onPressed: () {},
                         child: const Text(
@@ -314,7 +317,7 @@ class _InputsState extends State<Inputs> {
         children: [
           Text(
             widget.label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 15.0,
                 fontWeight: FontWeight.w500
             ),
@@ -325,24 +328,24 @@ class _InputsState extends State<Inputs> {
             height: 35.0,
             child: TextFormField(
               controller: widget.controller,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w500,
-                color: Colors.black,
+                color: AppThemeData.blackishTextColor,
               ),
               decoration: InputDecoration(
-                  enabledBorder: const UnderlineInputBorder(
+                  enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                           width: 0.5,
                           style: BorderStyle.solid,
-                          color: Colors.grey
+                          color: Colors.grey.shade900
                       )
                   ),
                   focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                           width: 1.0,
                           style: BorderStyle.solid,
-                          color: Theme.of(context).colorScheme.secondary
+                          color: AppThemeData.secondaryAppColor,
                       )
                   )
               ),

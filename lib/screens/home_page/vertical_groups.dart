@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:ingelt/shared/constants.dart';
 import '../../shared/widgets/show_group.dart';
 
 class VerGroup extends StatefulWidget {
@@ -24,10 +24,13 @@ class _VerGroupState extends State<VerGroup> {
     return GestureDetector(
       onTap: () {
         showModalBottomSheet<void>(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50.0),
+            ),
             isScrollControlled: true,
             context: context, 
             builder: (BuildContext context) {
-              return Wrap(
+              return Wrap(    // to control height of the modalsheetbottom(according to its content)
                 children: const [
                   ShowGroup(),
                 ],
@@ -41,11 +44,12 @@ class _VerGroupState extends State<VerGroup> {
         height: 210.0,
         width: MediaQuery.of(context).size.width * 0.84,
         decoration: BoxDecoration(
-            borderRadius: widget.onHomePage ? BorderRadius.all(Radius.circular(30.0)) : BorderRadius.all(Radius.circular(15.0)),
+            borderRadius: widget.onHomePage ? const BorderRadius.all(Radius.circular(30.0)) : const BorderRadius.all(Radius.circular(15.0)),
             gradient: LinearGradient(colors: [
-              Colors.green,
-              Colors.greenAccent
-            ], begin: Alignment.bottomCenter, end: Alignment.topCenter),
+              // AppThemeData.primaryAppColor,
+              const Color.fromRGBO(18, 125, 101, 0.8),
+              AppThemeData.primaryAppColor
+            ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

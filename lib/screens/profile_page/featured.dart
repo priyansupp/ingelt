@@ -47,7 +47,8 @@ class _FeaturedState extends State<Featured> {
                         style: const TextStyle(
                           overflow: TextOverflow.ellipsis,
                           fontSize: 13.0,
-                          fontWeight: FontWeight.w500
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black
                         ),
                       ),
                     ),

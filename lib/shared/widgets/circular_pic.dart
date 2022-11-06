@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class CircularPic extends StatefulWidget {
   const CircularPic({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class _CircularPicState extends State<CircularPic> {
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: 30.0,
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: AppThemeData.primaryAppColor,
       child: const CircleAvatar(
         radius: 28.0,
         backgroundColor: Colors.white,

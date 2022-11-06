@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ingelt/shared/constants.dart';
 
 
 class ResearchBar extends StatefulWidget {
@@ -19,16 +20,24 @@ class _ResearchBarState extends State<ResearchBar> {
           // color: Theme.of(context).scaffoldBackgroundColor,
           width: MediaQuery.of(context).size.width * 0.80,
           height: 25.0,
-          decoration: const BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.all(Radius.circular(50.0)),
+          decoration: BoxDecoration(
+            color: AppThemeData.lightGreyBgColor,
+            borderRadius: const BorderRadius.all(Radius.circular(50.0)),
           ),
           alignment: Alignment.topLeft,
           child: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width * widget.percentage / 100,
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
+              // color: AppThemeData.primaryAppColor,
+              gradient: LinearGradient(
+                colors: [
+                  AppThemeData.primaryAppColor,
+                  const Color.fromRGBO(18, 140, 101, 0.7),
+                ],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight
+              ),
               borderRadius: const BorderRadius.all(Radius.circular(50.0)),
             ),
             padding: const EdgeInsets.only(left: 20.0),
@@ -47,8 +56,8 @@ class _ResearchBarState extends State<ResearchBar> {
         const SizedBox(width: 8.0,),
         Text(
           '${widget.percentage}%',
-          style: const TextStyle(
-              color: Colors.black,
+          style: TextStyle(
+              color: AppThemeData.blackishTextColor,
               fontSize: 15.0,
               fontWeight: FontWeight.bold
           ),

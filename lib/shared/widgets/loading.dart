@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class Loading extends StatelessWidget {
 
@@ -23,14 +24,14 @@ class Loading extends StatelessWidget {
         ),
         const SizedBox(height: 50.0,),
         SpinKitDancingSquare(
-          color: Theme.of(context).colorScheme.secondary,
+          color: AppThemeData.secondaryAppColor,
           size: 100.0,
         ),
         const SizedBox(height: 50.0,),
         Text(
           message,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: AppThemeData.blackishTextColor,
             fontSize: 20.0,
           ),
         )

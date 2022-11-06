@@ -3,6 +3,7 @@ import 'package:ingelt/models/user_model.dart';
 import 'package:ingelt/screens/home_page/fetch_hor.dart';
 import 'fetch_general.dart';
 import 'fetch_specific.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -44,7 +45,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 image: AssetImage(
                     'assets/home_title_bg.jpg',
                 ),
-                opacity: 0.15,
+                opacity: 0.2,
                 fit: BoxFit.cover
               ),
             ),
@@ -52,22 +53,23 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             // color: Colors.white,
             child: Row(
               children: [
-                const Image(
+                Image(
                   width: 85.0,
                   height: 50.0,
                   image: AssetImage(
                       'assets/ingelt-logo.png'
                   ),
                   fit: BoxFit.fill,
-                  color: Color(0xEE5A5A5A),
+                  color: AppThemeData.blackishTextColor,
                 ),
+
                 const SizedBox(width: 10.0,),
                 Expanded(
                   child: SizedBox(
                     height: 35.0,
                     // width: MediaQuery.of(context).size.width * 0.75,
                     child: Material(
-                      elevation: 2.0,
+                      elevation: 4.0,
                       shadowColor: Colors.grey,
                       shape: const StadiumBorder(),
                       // borderRadius: const BorderRadius.all(Radius.circular(40.0)),
@@ -82,7 +84,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             padding: const EdgeInsets.only(left: 70.0, right: 10.0),
                             child: Icon(
                               Icons.search,
-                              color: Theme.of(context).secondaryHeaderColor,
+                              color: AppThemeData.blackishTextColor,
                               size: 20.0,
                             ),
                           ),
@@ -120,43 +122,27 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
             child: const FetchHor()
           ),
-          // const SizedBox(height: 3.0,),
+
           Container(
             height: 10.0,
             width: MediaQuery.of(context).size.width,
-            color: const Color(0xFFD3D3D3),
+            color: AppThemeData.lightGreyBgColor,
           ),
+
           Container(
             color: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               children: [
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: <Widget>[
-                //     GroupButton(
-                //       isRadio: true,
-                //       onSelected: (s, index, selected) => print('$s and $index and $selected'),   // here we fire the fetch
-                //       buttons: const ["Specific", "General"],
-                //       options: GroupButtonOptions(
-                //         selectedColor: Colors.white,
-                //         selectedBorderColor: Theme.of(context).colorScheme.primary,
-                //         selectedTextStyle: TextStyle(
-                //           color: Colors.grey
-                //         )
-                //       ),
-                //     )
-                //   ],
-                // ),
                 TabBar(
                   padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                  // labelColor: Theme.of(context).colorScheme.primary,
+                  labelColor: AppThemeData.blackishTextColor,
                   labelStyle: const TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w600,
-                    color: Colors.grey
                   ),
-                  indicatorColor: Theme.of(context).colorScheme.primary,
+                  indicatorColor: AppThemeData.secondaryAppColor,
+                  // indicatorColor: Color.fromRGBO(129, 188, 183, 1),
                   indicatorWeight: 2.5,
                   controller: _tabController,
                   // onTap: () {},

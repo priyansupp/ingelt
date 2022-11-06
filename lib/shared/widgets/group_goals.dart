@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class GroupGoals extends StatefulWidget {
   final int growthCount;
@@ -41,20 +42,20 @@ class _GroupGoalsState extends State<GroupGoals> {
                     crossAxisAlignment: CrossAxisAlignment.center,    // to place the dot and vertical line in center
                     children: [
                       growthFlag[index] ? CircleAvatar(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        backgroundColor: AppThemeData.primaryAppColor,
                         radius: 9.0,
                         child: CircleAvatar(
                             backgroundColor: Colors.white,
                             radius: 8.0,
                             child: Icon(
                               Icons.circle,
-                              color: Theme.of(context).colorScheme.primary,
+                              color: AppThemeData.primaryAppColor,
                               size: 15.0,
                             )
                         ),
-                      ) : const Icon(
+                      ) : Icon(
                         Icons.circle,
-                        color: Colors.black,
+                        color: AppThemeData.blackishTextColor,
                         size: 15.0,
                       ),
                       index != 5 ? const Text(
@@ -81,8 +82,8 @@ class _GroupGoalsState extends State<GroupGoals> {
               child: ListView.builder(
                 itemCount: 6,
                 itemBuilder: (BuildContext context, int index) {
-                  Color bgColor = growthFlag[index] ? Theme.of(context).colorScheme.primary : const Color(0xFFD3D3D3);
-                  Color textColor = growthFlag[index] ? Colors.white : Colors.black;
+                  Color bgColor = growthFlag[index] ? AppThemeData.primaryAppColor : AppThemeData.lightGreyBgColor;
+                  Color textColor = growthFlag[index] ? Colors.white : AppThemeData.blackishTextColor;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ingelt/models/message_model.dart';
 import 'package:ingelt/models/user_model.dart';
-import 'package:ingelt/screens/chat_page/group_info.dart';
 import 'package:ingelt/shared/widgets/circular_pic.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class DM extends StatefulWidget {
   final UserModel user;
@@ -24,7 +24,7 @@ class _DMState extends State<DM> {
       // width: MediaQuery.of(context).size.width * 0.65,
 
       decoration: BoxDecoration(
-        color: isMe ? Theme.of(context).colorScheme.primary : const Color(0xFFD3D3D3),
+        color: isMe ? AppThemeData.primaryAppColor : AppThemeData.lightGreyBgColor,
         borderRadius: isMe
             ? const BorderRadius.only(topLeft: Radius.circular(15.0), bottomLeft: Radius.circular(15.0), topRight: Radius.circular(15.0),)
             : const BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0), bottomRight: Radius.circular(15.0),),
@@ -39,7 +39,7 @@ class _DMState extends State<DM> {
           Text(
             message.text,
             style: TextStyle(
-              color: isMe ? Colors.white : Colors.black,
+              color: isMe ? Colors.white : AppThemeData.blackishTextColor,
               fontSize: 15.0,
               fontWeight: FontWeight.w500,
             ),
@@ -51,7 +51,7 @@ class _DMState extends State<DM> {
               Text(
                 message.time,
                 style: TextStyle(
-                  color: isMe ? Colors.white : Colors.black,
+                  color: isMe ? Colors.white : AppThemeData.blackishTextColor,
                   fontSize: 11.0,
                 ),
               ),
@@ -87,8 +87,8 @@ class _DMState extends State<DM> {
             clipBehavior: Clip.antiAlias,
             child: Container(
               width: MediaQuery.of(context).size.width - 80.0,    // width - leftpadding - rightpadding - diameter of CircularAvatar
-              decoration: const BoxDecoration(
-                color: Color(0xFFD3D3D3),
+              decoration: BoxDecoration(
+                color: AppThemeData.lightGreyBgColor,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -96,7 +96,7 @@ class _DMState extends State<DM> {
                   IconButton(
                     icon: const Icon(Icons.mic_none_rounded),
                     iconSize: 30.0,
-                    color: Colors.black,
+                    color: AppThemeData.blackishTextColor,
                     onPressed: () {},
                   ),
                   Expanded(
@@ -111,13 +111,13 @@ class _DMState extends State<DM> {
                   IconButton(
                     icon: const Icon(Icons.attach_file_rounded),
                     iconSize: 25.0,
-                    color: Colors.black,
+                    color: AppThemeData.blackishTextColor,
                     onPressed: () {},
                   ),
                   IconButton(
                     icon: const Icon(Icons.camera_alt_outlined),
                     iconSize: 25.0,
-                    color: Colors.black,
+                    color: AppThemeData.blackishTextColor,
                     onPressed: () {},
                   ),
                 ],
@@ -129,7 +129,7 @@ class _DMState extends State<DM> {
             elevation: 2.0,
             shape: const CircleBorder(),
             child: CircleAvatar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
+              backgroundColor: AppThemeData.primaryAppColor,
               radius: 30.0,
               child: IconButton(
                 icon: const Icon(Icons.send_rounded),
@@ -151,7 +151,7 @@ class _DMState extends State<DM> {
           children: [
             // appBar
             Container(
-              color: const Color(0xFFD3D3D3),
+              color: AppThemeData.lightGreyBgColor,
               height: 80.0,
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
@@ -167,10 +167,10 @@ class _DMState extends State<DM> {
                     top: 15.0,
                     child: Text(
                       widget.user.displayName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 25.0,
                         fontWeight: FontWeight.w700,
-                        color: Colors.black,
+                        color: AppThemeData.blackishTextColor,
                       ),
                     ),
                   ),
@@ -182,10 +182,8 @@ class _DMState extends State<DM> {
                     child: IconButton(
                       icon: const Icon(Icons.more_vert_rounded),
                       iconSize: 30.0,
-                      color: Colors.black,
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const GroupInfo()));
-                      },
+                      color: AppThemeData.blackishTextColor,
+                      onPressed: () {},
                     ),
                   ),
                 ],

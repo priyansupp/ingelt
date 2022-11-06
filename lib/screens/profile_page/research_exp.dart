@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ingelt/shared/widgets/rating.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class ResearchExp extends StatefulWidget {
   final String topic;
@@ -35,7 +36,7 @@ class _ResearchExpState extends State<ResearchExp> {
               const SizedBox(width: 5.0,),
               VerticalDivider(
                 thickness: 3.0,
-                color: Theme.of(context).colorScheme.primary,
+                color: AppThemeData.primaryAppColor
               ),
               const SizedBox(width: 5.0,),
               Expanded(
@@ -45,22 +46,22 @@ class _ResearchExpState extends State<ResearchExp> {
                   children: [
                     Text(
                       widget.topic,
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.w900,
-                          color: Colors.black
+                          color: AppThemeData.blackishTextColor
                       ),
                     ),
-                    const Divider(
+                    Divider(
                       thickness: 1.5,
-                      color: Colors.grey,
+                      color: Colors.grey.shade500,
                     ),
                     Text(
                       widget.company,
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 12.0,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black
+                          fontWeight: FontWeight.w500,
+                          color: AppThemeData.blackishTextColor
                       ),
                     ),
                     // const SizedBox(height: 3.0,),
@@ -68,7 +69,7 @@ class _ResearchExpState extends State<ResearchExp> {
                       '${widget.startDate} - ${widget.endDate}, 3 mos',
                       style: const TextStyle(
                           fontSize: 13.0,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w500,
                           color: Colors.grey
                       ),
                     ),

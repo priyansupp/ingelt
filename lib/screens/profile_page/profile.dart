@@ -3,12 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ingelt/models/user_model.dart';
+import 'package:ingelt/screens/profile_page/edit_profile.dart';
 import 'package:ingelt/screens/profile_page/research_exp.dart';
 import 'package:ingelt/screens/profile_page/research_bar.dart';
-import 'package:ingelt/screens/profile_page/settings.dart';
+import 'package:ingelt/shared/widgets/rating.dart';
 import '../../models/user_model.dart';
 import '../../shared/utils.dart';
 import 'featured.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -36,6 +38,7 @@ class _ProfileState extends State<Profile> {
   }
 
   int percentage = 40;
+  int rating = 75;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +53,7 @@ class _ProfileState extends State<Profile> {
             // print(snapshot.data);
             // print(user!.photoURL);
             return Scaffold(
+              backgroundColor: AppThemeData.lightGreyBgColor,
               body: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
@@ -60,7 +64,7 @@ class _ProfileState extends State<Profile> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Container(
+                          SizedBox(
                             height: 185.0,
                             width: MediaQuery.of(context).size.width,
                             // color: Colors.blue,
@@ -87,21 +91,22 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       )
                                           :
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          Icons.photo_camera,
-                                          color: Colors.black,
-                                        ),
-                                        iconSize: 70.0,
-                                      ),
+                                          const SizedBox.shrink()
+                                      // IconButton(
+                                      //   onPressed: () {},
+                                      //   icon: Icon(
+                                      //     Icons.photo_camera,
+                                      //     color: AppThemeData.blackishTextColor,
+                                      //   ),
+                                      //   iconSize: 70.0,
+                                      // ),
                                     )
                                 ),
 
-                                const Positioned(
+                                Positioned(
                                   left: 125.0,
                                   top: 145.0,
-                                  child: Icon(Icons.verified, color: Colors.blue,),
+                                  child: rating >= 95 ? const Icon(Icons.verified, color: Colors.blue,) : Transform.scale(scale: 0.6, child: Rating(percentage: rating)),
                                 ),
 
                                 Positioned(
@@ -110,30 +115,10 @@ class _ProfileState extends State<Profile> {
                                   child: IconButton(
                                     icon: const Icon(Icons.settings),
                                     onPressed: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfileSettings()));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const EditProfile()));
                                     },
                                     iconSize: 28.0,
                                   )
-                                  // child: SizedBox(
-                                  //   height: 35.0,
-                                  //   width: 100.0,
-                                  //   child: TextButton(
-                                  //     onPressed: () {},
-                                  //     style: TextButton.styleFrom(
-                                  //         shape: const StadiumBorder(),
-                                  //         side: const BorderSide(
-                                  //           color: Colors.black,
-                                  //         )
-                                  //     ),
-                                  //     child: const Text(
-                                  //       'Edit Profile',
-                                  //       style: TextStyle(
-                                  //         color: Colors.black,
-                                  //         fontSize: 12.0,
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
                                 )
                               ],
                             ),
@@ -145,45 +130,35 @@ class _ProfileState extends State<Profile> {
                               children: [
                                 Text(
                                   user.displayName,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.black,
+                                      color: AppThemeData.blackishTextColor,
                                       fontWeight: FontWeight.bold
                                   ),
                                 ),
-                                const Text(
+                                Text(
                                   'Co-founder: Ingelt',
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: Colors.black,
+                                    color: AppThemeData.blackishTextColor,
                                   ),
                                 ),
                                 const SizedBox(height: 5.0,),
-                                const Text(
+                                Text(
                                   'IIT Guwahati',
                                   style: TextStyle(
                                       fontSize: 13.0,
-                                      color: Colors.black,
+                                      color: AppThemeData.blackishTextColor,
                                       fontWeight: FontWeight.w500
                                   ),
                                 ),
-                                const Text(
+                                Text(
                                   'New Delhi, Delhi, India',
                                   style: TextStyle(
                                     fontSize: 11.0,
-                                    color: Colors.black,
+                                    color: AppThemeData.blackishTextColor,
                                   ),
                                 ),
-                                // const SizedBox(height: 15.0,),
-                                // Text(
-                                //   '300 connections',
-                                //   style: TextStyle(
-                                //       fontSize: 20.0,
-                                //       fontWeight: FontWeight.bold,
-                                //       color: Theme.of(context).colorScheme.primary,
-                                //   ),
-                                // ),
-                                // const SizedBox(height: 8.0,),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -192,7 +167,7 @@ class _ProfileState extends State<Profile> {
                                     ElevatedButton(
                                       onPressed: () {},
                                       style: ElevatedButton.styleFrom(
-                                          primary: Theme.of(context).colorScheme.secondary,
+                                          primary: AppThemeData.secondaryAppColor,
                                           minimumSize: Size(MediaQuery.of(context).size.width * 0.35, 32.0),
                                           shape: const StadiumBorder()
                                       ),
@@ -209,10 +184,10 @@ class _ProfileState extends State<Profile> {
                                     OutlinedButton(
                                       onPressed: () {},
                                       style: OutlinedButton.styleFrom(
-                                          primary: Theme.of(context).colorScheme.secondary,
+                                          primary: AppThemeData.secondaryAppColor,
                                           minimumSize: Size(MediaQuery.of(context).size.width * 0.35, 32.0),
                                           side: BorderSide(
-                                            color: Theme.of(context).colorScheme.secondary,
+                                            color: AppThemeData.secondaryAppColor,
                                           ),
                                           shape: const StadiumBorder()        // creates rounded borders
                                       ),
@@ -230,13 +205,13 @@ class _ProfileState extends State<Profile> {
                                       height: 32.0,
                                       width: MediaQuery.of(context).size.width * 0.15,
                                       decoration: BoxDecoration(
-                                        border: Border.all(width: 1.0, color: Theme.of(context).colorScheme.secondary),
+                                        border: Border.all(width: 1.0, color: AppThemeData.secondaryAppColor,),
                                         borderRadius: const BorderRadius.all(Radius.elliptical(30.0, 30.0)),
                                       ),
                                       child: IconButton(
                                         onPressed: () {},
                                         icon: const Icon(Icons.more_horiz_rounded),
-                                        color: Theme.of(context).colorScheme.secondary,
+                                        color: AppThemeData.secondaryAppColor,
                                         iconSize: 23.0,
                                       ),
                                     ),
@@ -260,22 +235,22 @@ class _ProfileState extends State<Profile> {
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'FORTE',
                             style: TextStyle(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 1.5,
-                                color: Colors.black
+                                color: AppThemeData.blackishTextColor,
                             ),
                           ),
-                          SizedBox(height: 10.0,),
-                          ResearchBar(text: 'GRAPHIC DESIGN', percentage: 40,),
-                          SizedBox(height: 12.0,),
-                          ResearchBar(text: 'MARKETING', percentage: 60,),
-                          SizedBox(height: 12.0,),
-                          ResearchBar(text: 'FINANCE', percentage: 80,),
+                          const SizedBox(height: 10.0,),
+                          const ResearchBar(text: 'GRAPHIC DESIGN', percentage: 40,),
+                          const SizedBox(height: 12.0,),
+                          const ResearchBar(text: 'MARKETING', percentage: 60,),
+                          const SizedBox(height: 12.0,),
+                          const ResearchBar(text: 'FINANCE', percentage: 80,),
 
                         ],
                       ),
@@ -293,24 +268,24 @@ class _ProfileState extends State<Profile> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 'WORKING',
                                 style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w900,
                                     letterSpacing: 1.5,
-                                    color: Colors.black
+                                    color: AppThemeData.blackishTextColor,
                                 ),
                               ),
                               IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded), iconSize: 35.0,)
                             ],
                           ),
-                          const Text(
+                          Text(
                             'Engineering is the use of scientific principles to design and build machines, structures, and other items, including bridges, tunnels, roads, vehicles, and buildings.[1] The discipline of engineering encompasses a broad range of more specialized fields of engineering, each with a more specific emphasis on particular areas of applied mathematics, applied science, and types of application. See glossary of engineering.',
                             style: TextStyle(
                                 fontSize: 15.0,
                                 letterSpacing: 0.0,
-                                color: Colors.black,
+                                color: AppThemeData.blackishTextColor,
                               overflow: TextOverflow.ellipsis
                             ),
                             maxLines: 5,
@@ -332,13 +307,13 @@ class _ProfileState extends State<Profile> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
+                                Text(
                                   'FEATURED',
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w900,
                                       letterSpacing: 1.5,
-                                      color: Colors.black
+                                      color: AppThemeData.blackishTextColor,
                                   ),
                                 ),
                                 IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded), iconSize: 25.0,)
@@ -373,13 +348,13 @@ class _ProfileState extends State<Profile> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 'RESEARCH EXPERIENCE',
                                 style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w900,
                                     letterSpacing: 1.5,
-                                    color: Colors.black
+                                    color: AppThemeData.blackishTextColor,
                                 ),
                               ),
                               IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded), iconSize: 35.0,)

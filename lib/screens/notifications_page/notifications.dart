@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({Key? key}) : super(key: key);
@@ -11,14 +12,6 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        FirebaseAuth.instance.signOut();
-      },
-      child: Text(
-        'logout'
-      ),
-    );
     return Column(
       children: [
         Container(
@@ -28,7 +21,7 @@ class _NotificationsState extends State<Notifications> {
                   image: AssetImage(
                     'assets/home_title_bg.jpg',
                   ),
-                  opacity: 0.15,
+                  opacity: 0.20,
                   fit: BoxFit.cover
               )
           ),
@@ -36,24 +29,25 @@ class _NotificationsState extends State<Notifications> {
           height: 110.0,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Image(
                 width: 100.0,
                 height: 60.0,
-                image: AssetImage(
+                image: const AssetImage(
                     'assets/ingelt-logo.png'
                 ),
                 fit: BoxFit.fill,
-                color: Color(0xFF5A5A5A),
+                color: AppThemeData.blackishTextColor
               ),
-              SizedBox(height: 10.0,),
+              const SizedBox(height: 10.0,),
               Text(
                 ' Notifications',
                 style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
                     height: -0.01,
-                  color: Color(0xFF5A5A5A),
+                  color: AppThemeData.blackishTextColor,
+                  letterSpacing: 1
                 ),
               ),
             ],
@@ -85,14 +79,9 @@ class _NotificationsState extends State<Notifications> {
   }
 }
 
-class Notif extends StatefulWidget {
+class Notif extends StatelessWidget {
   const Notif({Key? key}) : super(key: key);
 
-  @override
-  State<Notif> createState() => _NotifState();
-}
-
-class _NotifState extends State<Notif> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -116,20 +105,21 @@ class _NotifState extends State<Notif> {
               Text(
                 'Riya',
                 style: TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
+                    color: AppThemeData.primaryAppColor
                 ),
               ),
-              const SizedBox(width: 2.0,),
 
-              const Text(
+              const SizedBox(width: 4.0,),
+
+              Text(
                 'liked your post',
                 maxLines: 2,
                 style: TextStyle(
                     fontSize: 14.0,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black54,
+                    fontWeight: FontWeight.w500,
+                    color: AppThemeData.blackishTextColor,
                     overflow: TextOverflow.ellipsis
                 ),
               ),
@@ -137,12 +127,12 @@ class _NotifState extends State<Notif> {
             ],
           ),
 
-          const Text(
+          Text(
             '08:12',
             style: TextStyle(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w500,
-                color: Colors.black54
+                color: AppThemeData.blackishTextColor
             ),
           ),
 

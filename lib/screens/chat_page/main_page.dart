@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/user_model.dart';
 import 'direct_msg.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -43,7 +44,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                     image: AssetImage(
                       'assets/home_title_bg.jpg',
                     ),
-                    opacity: 0.15,
+                    opacity: 0.20,
                     fit: BoxFit.cover
                 )
             ),
@@ -52,19 +53,19 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Image(
+                Image(
                   width: 85.0,
                   height: 50.0,
                   image: AssetImage(
                       'assets/ingelt-logo.png'
                   ),
                   fit: BoxFit.fill,
-                  color: Color(0xEE5A5A5A),
+                  color: AppThemeData.blackishTextColor,
                 ),
 
                 Expanded(
                   child: Material(
-                    elevation: 2.0,
+                    elevation: 4.0,
                     shadowColor: Colors.grey,
                     shape: const StadiumBorder(),
                     // borderRadius: const BorderRadius.all(Radius.circular(40.0)),
@@ -81,7 +82,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                               padding: const EdgeInsets.only(left: 40.0, right: 10.0),
                               child: Icon(
                                 Icons.search,
-                                color: Theme.of(context).secondaryHeaderColor,
+                                color: AppThemeData.blackishTextColor,
                                 size: 20.0,
                               ),
                             ),
@@ -113,7 +114,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.more_vert_rounded),
-                  color: Colors.black,
+                  color: AppThemeData.blackishTextColor,
                   iconSize: 30.0,
                 )
               ],
@@ -126,19 +127,19 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                     image: AssetImage(
                       'assets/home_title_bg.jpg',
                     ),
-                    opacity: 0.15,
+                    opacity: 0.20,
                     fit: BoxFit.cover
                 )
             ),
             child: TabBar(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              // labelColor: Theme.of(context).colorScheme.primary,
+              labelColor: AppThemeData.blackishTextColor,
               labelStyle: const TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w500,
-                  color: Colors.grey
+                  // color: AppThemeData.blackishTextColor
               ),
-              indicatorColor: Theme.of(context).colorScheme.primary,
+              indicatorColor: AppThemeData.primaryAppColor,
               indicatorWeight: 2.5,
               controller: _tabController,
               // onTap: () {},
@@ -254,10 +255,10 @@ class _ConversationState extends State<Conversation> {
                         const SizedBox(height: 7.0,),
                         Text(
                           widget.name,
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: AppThemeData.blackishTextColor,
                               letterSpacing: -0.3
                           ),
                         ),
@@ -265,8 +266,8 @@ class _ConversationState extends State<Conversation> {
                         Text(
                           widget.lastMessage,
                           style: const TextStyle(
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w400,
                               color: Colors.black54
                           ),
                         ),
@@ -287,7 +288,7 @@ class _ConversationState extends State<Conversation> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
+                        color: AppThemeData.primaryAppColor,
                         borderRadius: BorderRadius.all(Radius.circular(50.0)),
                       ),
                       padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 1.0),

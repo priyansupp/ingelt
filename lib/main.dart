@@ -36,14 +36,6 @@ class MyApp extends StatelessWidget {
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
-            primaryColor: Colors.grey,     // primary color in whole app
-            secondaryHeaderColor: Colors.black,
-            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal).copyWith(secondary: const Color(0x8f00f884)),     // primarySwatch is grey, mainly the color of any widget in body(a material color) and accentColor/secondary is lightBlue, mainly other widgets color
-            scaffoldBackgroundColor: Colors.white60,      // background color of scaffold everywhere
-            textTheme: const TextTheme(
-              bodyText1: TextStyle(color: Colors.black),
-              bodyText2: TextStyle(color: Colors.black54),
-            )
         ),
         home: const Wrapper(),
       ),

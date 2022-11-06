@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ingelt/models/message_model.dart';
 import 'package:ingelt/models/user_model.dart';
-import 'package:ingelt/screens/chat_page/group_info.dart';
 import 'package:ingelt/shared/widgets/circular_pic.dart';
+import 'group_info.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class GroupChat extends StatefulWidget {
   final UserModel user;
@@ -25,7 +26,7 @@ class _GroupChatState extends State<GroupChat> {
       width: MediaQuery.of(context).size.width * 0.65,
 
       decoration: BoxDecoration(
-        color: isMe ? Theme.of(context).colorScheme.primary : const Color(0xFFD3D3D3),
+        color: isMe ? AppThemeData.primaryAppColor : AppThemeData.lightGreyBgColor,
         borderRadius: isMe
             ? const BorderRadius.only(topLeft: Radius.circular(15.0), bottomLeft: Radius.circular(15.0), topRight: Radius.circular(15.0),)
             : const BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0), bottomRight: Radius.circular(15.0),),
@@ -40,7 +41,7 @@ class _GroupChatState extends State<GroupChat> {
               isMe ? const SizedBox.shrink() : Text(
                 '${message.sender.displayName} | ',
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: AppThemeData.primaryAppColor,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w500,
                 ),
@@ -49,7 +50,7 @@ class _GroupChatState extends State<GroupChat> {
                 'Marketing',
                 // message.sender.category,
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: AppThemeData.primaryAppColor,
                   fontSize: 16.0,
                   fontWeight: FontWeight.w300,
                 ),
@@ -60,7 +61,7 @@ class _GroupChatState extends State<GroupChat> {
           Text(
             message.text,
             style: TextStyle(
-              color: isMe ? Colors.white : Colors.black,
+              color: isMe ? Colors.white : AppThemeData.blackishTextColor,
               fontSize: 15.0,
               fontWeight: FontWeight.w500,
             ),
@@ -72,7 +73,7 @@ class _GroupChatState extends State<GroupChat> {
               Text(
                 message.time,
                 style: TextStyle(
-                  color: isMe ? Colors.white : const Color(0xEE5A5A5A),
+                  color: isMe ? Colors.white : AppThemeData.blackishTextColor,
                   fontSize: 11.0,
                 ),
               ),
@@ -133,8 +134,8 @@ class _GroupChatState extends State<GroupChat> {
             clipBehavior: Clip.antiAlias,
             child: Container(
               width: MediaQuery.of(context).size.width - 80.0,    // width - leftpadding - rightpadding - diameter of CircularAvatar
-              decoration: const BoxDecoration(
-                color: Color(0xFFD3D3D3),
+              decoration: BoxDecoration(
+                color: AppThemeData.lightGreyBgColor,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -142,7 +143,7 @@ class _GroupChatState extends State<GroupChat> {
                   IconButton(
                     icon: const Icon(Icons.mic_none_rounded),
                     iconSize: 30.0,
-                    color: Colors.black,
+                    color: AppThemeData.blackishTextColor,
                     onPressed: () {},
                   ),
                   Expanded(
@@ -157,13 +158,13 @@ class _GroupChatState extends State<GroupChat> {
                   IconButton(
                     icon: const Icon(Icons.attach_file_rounded),
                     iconSize: 25.0,
-                    color: Colors.black,
+                    color: AppThemeData.blackishTextColor,
                     onPressed: () {},
                   ),
                   IconButton(
                     icon: const Icon(Icons.camera_alt_outlined),
                     iconSize: 25.0,
-                    color: Colors.black,
+                    color: AppThemeData.blackishTextColor,
                     onPressed: () {},
                   ),
                 ],
@@ -175,7 +176,7 @@ class _GroupChatState extends State<GroupChat> {
             elevation: 2.0,
             shape: const CircleBorder(),
             child: CircleAvatar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
+              backgroundColor: AppThemeData.primaryAppColor,
               radius: 30.0,
               child: IconButton(
                 icon: const Icon(Icons.send_rounded),
@@ -197,7 +198,7 @@ class _GroupChatState extends State<GroupChat> {
           children: [
             // appBar
             Container(
-              color: const Color(0xFFD3D3D3),
+              color: AppThemeData.lightGreyBgColor,
               height: 75.0,
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
@@ -213,10 +214,10 @@ class _GroupChatState extends State<GroupChat> {
                     top: 15.0,
                     child: Text(
                       widget.user.displayName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 25.0,
                         fontWeight: FontWeight.w700,
-                        color: Colors.black,
+                        color: AppThemeData.blackishTextColor,
                       ),
                     ),
                   ),
@@ -233,7 +234,7 @@ class _GroupChatState extends State<GroupChat> {
                             padding: const EdgeInsets.symmetric(horizontal: 10.0),
                             shape: const StadiumBorder(),
                             side: BorderSide(
-                                color: Theme.of(context).colorScheme.primary,
+                                color: AppThemeData.primaryAppColor,
                                 width: 1.5
                             )
                         ),
@@ -252,7 +253,7 @@ class _GroupChatState extends State<GroupChat> {
                     child: IconButton(
                       icon: const Icon(Icons.info_outline),
                       iconSize: 24.0,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: AppThemeData.primaryAppColor,
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const GroupInfo()));
                       },

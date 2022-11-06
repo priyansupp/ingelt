@@ -3,6 +3,7 @@ import 'package:ingelt/screens/chat_page/main_page.dart';
 import 'package:ingelt/screens/group_page/group_chat.dart';
 import '../../models/user_model.dart';
 import '../../shared/widgets/circular_pic.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class AllyReqGroup extends StatefulWidget {
   const AllyReqGroup({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
         // width: MediaQuery.of(context).size.width*0.8,
         height: 180.0,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: AppThemeData.primaryAppColor,
           borderRadius: const BorderRadius.all(Radius.circular(20.0)),
         ),
         child: Stack(
@@ -33,7 +34,7 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
               height: 120.0,
               // width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
+                color: AppThemeData.secondaryAppColor,
                 borderRadius: const BorderRadius.only(topRight: Radius.circular(20.0), topLeft: Radius.circular(20.0), bottomLeft: Radius.circular(17.0), bottomRight: Radius.circular(17.0)),
               ),
               child: Row(
@@ -60,7 +61,7 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
                           maxLines: 1,
                         ),
                       ),
-                      SizedBox(height: 5.0,),
+                      const SizedBox(height: 5.0,),
                       SizedBox(
                         width: MediaQuery.of(context).size.width*0.65,
                         child: const Text(
@@ -141,11 +142,11 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
 
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       Text(
                         'Today',
                         style: TextStyle(
-                            color: Colors.black,
+                            color: AppThemeData.blackishTextColor,
                             fontWeight: FontWeight.w600,
                             fontSize: 15.0
                         ),
@@ -153,7 +154,7 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
                       Text(
                         ' | ',
                         style: TextStyle(
-                            color: Colors.black,
+                            color: AppThemeData.blackishTextColor,
                             fontWeight: FontWeight.w600,
                             fontSize: 15.0
                         ),
@@ -161,7 +162,7 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
                       Text(
                         '18:00',
                         style: TextStyle(
-                            color: Colors.black,
+                            color: AppThemeData.blackishTextColor,
                             fontWeight: FontWeight.w600,
                             fontSize: 15.0
                         ),

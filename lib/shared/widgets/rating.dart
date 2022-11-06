@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class Rating extends StatefulWidget {
   final int percentage;
@@ -15,13 +16,13 @@ class _RatingState extends State<Rating> {
       children: [
         CircleAvatar(
           radius: 21.0,
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: AppThemeData.secondaryAppColor,
           child: const CircleAvatar(
             radius: 18.0,
             backgroundColor: Colors.white,
             child: CircleAvatar(
               radius: 15.0,
-              backgroundColor: Colors.orange,
+              backgroundColor: Colors.yellow,
               child: CircleAvatar(
                 radius: 12.0,
                 backgroundColor: Colors.white,
@@ -36,10 +37,10 @@ class _RatingState extends State<Rating> {
             color: Colors.white,
             child: Text(
               '${widget.percentage}',
-              style: const TextStyle(
+              style: TextStyle(
                   fontSize: 19.0,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black
+                  color: AppThemeData.blackishTextColor
               ),
             ),
           ),

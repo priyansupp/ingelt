@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:ingelt/shared/constants.dart';
 import 'ally_req_group.dart';
 
 class Request extends StatefulWidget {
@@ -56,10 +56,10 @@ class _DayWidgetState extends State<DayWidget> {
         children: [
           Text(
             widget.day,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
-              color: Colors.black
+              color: AppThemeData.blackishTextColor
             ),
           ),
           const SizedBox(width: 5.0,),

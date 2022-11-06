@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class HorGroup extends StatefulWidget {
   const HorGroup({Key? key}) : super(key: key);
@@ -20,12 +21,14 @@ class _HorGroupState extends State<HorGroup> {
     return Container(
       margin: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 7.0),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
           gradient: LinearGradient(colors: [
-            Colors.green,
-            Colors.greenAccent
-          ], begin: Alignment.bottomCenter, end: Alignment.topCenter),
+            // AppThemeData.primaryAppColor,
+            // AppThemeData.secondaryAppColor,
+            const Color.fromRGBO(18, 125, 101, 0.8),
+            AppThemeData.primaryAppColor,
+          ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
