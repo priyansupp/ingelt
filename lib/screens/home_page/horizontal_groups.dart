@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ingelt/shared/constants.dart';
 
@@ -22,7 +23,7 @@ class _HorGroupState extends State<HorGroup> {
       margin: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 7.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
           gradient: LinearGradient(colors: [
             // AppThemeData.primaryAppColor,
             // AppThemeData.secondaryAppColor,
@@ -51,7 +52,9 @@ class _HorGroupState extends State<HorGroup> {
                 width: 60.0,
                 height: 30.0,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: ()  {
+                    FirebaseAuth.instance.signOut();
+                  },
                   style: ElevatedButton.styleFrom(
                     // primary: Theme.of(context).colorScheme.primary,   // background color of button
                     primary: Colors.white,

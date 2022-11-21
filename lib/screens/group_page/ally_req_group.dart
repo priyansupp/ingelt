@@ -1,24 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:ingelt/screens/chat_page/main_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ingelt/business_logic/blocs/group_bloc.dart';
+import 'package:ingelt/business_logic/blocs/group_event.dart';
 import 'package:ingelt/screens/group_page/group_chat.dart';
-import '../../models/user_model.dart';
+import '../../business_logic/blocs/group_state.dart';
+import '../../data/models/group_model.dart';
+import '../../data/models/profile_model.dart';
 import '../../shared/widgets/circular_pic.dart';
 import 'package:ingelt/shared/constants.dart';
 
 class AllyReqGroup extends StatefulWidget {
-  const AllyReqGroup({Key? key}) : super(key: key);
+  final String grpId;
+  final bool isAlly;
+  const AllyReqGroup({Key? key, required this.grpId, required this.isAlly}) : super(key: key);
 
   @override
   State<AllyReqGroup> createState() => _AllyReqGroupState();
 }
-final UserModel userrrrr = UserModel(uid: '0', displayName: 'Priyanshu', photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in');
+final ProfileModel userrrrr = ProfileModel(uid: '0', name: 'Priyanshu', photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in');
 
 class _AllyReqGroupState extends State<AllyReqGroup> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("ally-req-grp ${widget.grpId}");
+    context.read<GroupBloc>().add(GetGroupDetailsEvent(grpId: widget.grpId));
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => GroupChat(user: userrrrr)));
+        if(widget.isAlly) {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => GroupChat(user: userrrrr)));
+        }
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 5.0),
@@ -28,150 +46,178 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
           color: AppThemeData.primaryAppColor,
           borderRadius: const BorderRadius.all(Radius.circular(20.0)),
         ),
-        child: Stack(
-          children: [
-            Container(
-              height: 120.0,
-              // width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: AppThemeData.secondaryAppColor,
-                borderRadius: const BorderRadius.only(topRight: Radius.circular(20.0), topLeft: Radius.circular(20.0), bottomLeft: Radius.circular(17.0), bottomRight: Radius.circular(17.0)),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
+        child: BlocBuilder<GroupBloc, GroupState>(
+          builder: (context, state) {
+            if(state is GroupLoadedState) {
+              final GroupModel? groupModel = state.groupModel;
+              // print("ally-req-grp ${groupModel?.participants}");
+              return Stack(
                 children: [
-                  // const SizedBox(width: 7.0,),
-                  Transform.scale(scale: 1.2, child: CircularPic()),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.65,
-                        child: const Text(
-                          'Marketing Elites Association',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0,
-                              color: Colors.white,
-                              overflow: TextOverflow.ellipsis,
-                              letterSpacing: 0.5
-                          ),
-                          maxLines: 1,
-                        ),
-                      ),
-                      const SizedBox(height: 5.0,),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.65,
-                        child: const Text(
-                          'Capitalise skills and take a mover advantage in the opening fields of science...',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15.0,
-                              color: Colors.white,
-                              overflow: TextOverflow.ellipsis,
-                              letterSpacing: 0.5
-                          ),
-                          maxLines: 2,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-
-            Positioned(
-              bottom: 10.0,
-              left: 20.0,
-              child: Row(
-                children: [
-                  Stack(
-                    fit: StackFit.passthrough,
-                    children: const [
-                      CircleAvatar(
-                        backgroundImage: AssetImage(
-                            'assets/person.jpg'
-                        ),
-                        radius: 18.0,
-                      ),
-                      SizedBox(width: 70.0,),
-                      Positioned(
-                        left: 15.0,
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage(
-                              'assets/person.jpg'
-                          ),
-                          radius: 18.0,
-                        ),
-                      ),
-                      Positioned(
-                        left: 30.0,
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage(
-                              'assets/person.jpg'
-                          ),
-                          radius: 18.0,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const Text(
-                    '10 joined',
-                    style: TextStyle(
-                        fontSize: 13.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white
+                  Container(
+                    height: 120.0,
+                    // width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: AppThemeData.secondaryAppColor,
+                      borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(20.0),
+                          topLeft: Radius.circular(20.0),
+                          bottomLeft: Radius.circular(17.0),
+                          bottomRight: Radius.circular(17.0)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // const SizedBox(width: 7.0,),
+                        Transform.scale(scale: 1.2, child: const CircularPic()),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * 0.65,
+                              child: Text(
+                                // 'Marketing Elites Association',
+                                groupModel!.grpName,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.0,
+                                    color: Colors.white,
+                                    overflow: TextOverflow.ellipsis,
+                                    letterSpacing: 0.5
+                                ),
+                                maxLines: 1,
+                              ),
+                            ),
+                            const SizedBox(height: 5.0,),
+                            SizedBox(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * 0.65,
+                              child: Text(
+                                // 'Capitalise skills and take a mover advantage in the opening fields of science...',
+                                groupModel.description,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                    overflow: TextOverflow.ellipsis,
+                                    letterSpacing: 0.5
+                                ),
+                                maxLines: 2,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
 
-            Positioned(
-              right: 17.0,
-              bottom: 46.0,
-              child: Container(
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(9.0)),
-                      color: Colors.white
+                  Positioned(
+                    bottom: 10.0,
+                    left: 20.0,
+                    child: Row(
+                      children: [
+                        Stack(
+                          fit: StackFit.passthrough,
+                          children: const [
+                            CircleAvatar(
+                              backgroundImage: AssetImage(
+                                  'assets/person.jpg'
+                              ),
+                              radius: 18.0,
+                            ),
+                            SizedBox(width: 70.0,),
+                            Positioned(
+                              left: 15.0,
+                              child: CircleAvatar(
+                                backgroundImage: AssetImage(
+                                    'assets/person.jpg'
+                                ),
+                                radius: 18.0,
+                              ),
+                            ),
+                            Positioned(
+                              left: 30.0,
+                              child: CircleAvatar(
+                                backgroundImage: AssetImage(
+                                    'assets/person.jpg'
+                                ),
+                                radius: 18.0,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        Text(
+                          '${groupModel.participants.length} joined',
+                          style: const TextStyle(
+                              fontSize: 13.0,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 13.0, vertical: 7.0),
 
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'Today',
-                        style: TextStyle(
-                            color: AppThemeData.blackishTextColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15.0
+                  Positioned(
+                    right: 17.0,
+                    bottom: 46.0,
+                    child: Container(
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(
+                                9.0)),
+                            color: Colors.white
                         ),
-                      ),
-                      Text(
-                        ' | ',
-                        style: TextStyle(
-                            color: AppThemeData.blackishTextColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15.0
-                        ),
-                      ),
-                      Text(
-                        '18:00',
-                        style: TextStyle(
-                            color: AppThemeData.blackishTextColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15.0
-                        ),
-                      )
-                    ],
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 13.0, vertical: 7.0),
+
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              groupModel.date,
+                              style: TextStyle(
+                                  color: AppThemeData.blackishTextColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15.0
+                              ),
+                            ),
+                            Text(
+                              ' | ',
+                              style: TextStyle(
+                                  color: AppThemeData.blackishTextColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15.0
+                              ),
+                            ),
+                            Text(
+                              groupModel.time,
+                              style: TextStyle(
+                                  color: AppThemeData.blackishTextColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15.0
+                              ),
+                            )
+                          ],
+                        )
+                    ),
                   )
-              ),
-            )
-          ],
+                ],
+              );
+            } else if (state is GroupLoadingState) {
+              return const CircularProgressIndicator();
+            } else if (state is GroupErrorState) {
+              return Center(child: Text(state.error),);
+            } else {
+              return const Center(child: Text("Some error occurred"),);
+            }
+          }
         ),
       ),
     );

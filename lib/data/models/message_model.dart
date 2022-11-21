@@ -1,8 +1,8 @@
-import 'package:ingelt/models/group_model.dart';
-import 'package:ingelt/models/user_model.dart';
+import 'package:ingelt/data/models/group_model.dart';
+import 'package:ingelt/data/models/profile_model.dart';
 
 class MessageModel {
-  final UserModel sender;
+  final ProfileModel sender;
   final String time; // Would usually be type DateTime or Firebase Timestamp in production apps
   final String text;
   final bool isLiked;
@@ -16,52 +16,52 @@ class MessageModel {
 }
 
 // YOU - current user
-final UserModel currentUser = UserModel(
+final ProfileModel currentUser = ProfileModel(
   uid: '0',
-  displayName: 'Current User',
-  photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
+  name: 'Current User',
+  photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in'
 );
 
 // USERS
-final UserModel priyanshu = UserModel(
+final ProfileModel priyanshu = ProfileModel(
     uid: '0',
-    displayName: 'Priyanshu',
-    photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
+    name: 'Priyanshu',
+    photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in'
 );
-final UserModel greg = UserModel(
+final ProfileModel greg = ProfileModel(
     uid: '1',
-    displayName: 'Greg',
-    photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
+    name: 'Greg',
+    photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in'
 );
-final UserModel james = UserModel(
+final ProfileModel james = ProfileModel(
     uid: '2',
-    displayName: 'James',
-    photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
+    name: 'James',
+    photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in'
 );
-final UserModel john = UserModel(
+final ProfileModel john = ProfileModel(
     uid: '3',
-    displayName: 'John',
-    photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
+    name: 'John',
+    photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in'
 );
-final UserModel olivia = UserModel(
+final ProfileModel olivia = ProfileModel(
     uid: '4',
-    displayName: 'Olivia',
-    photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
+    name: 'Olivia',
+    photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in'
 );
-final UserModel sam = UserModel(
+final ProfileModel sam = ProfileModel(
     uid: '5',
-    displayName: 'Sam',
-    photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
+    name: 'Sam',
+    photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in'
 );
-final UserModel sophia = UserModel(
+final ProfileModel sophia = ProfileModel(
     uid: '6',
-    displayName: 'Sophia',
-    photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
+    name: 'Sophia',
+    photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in'
 );
-final UserModel steven = UserModel(
+final ProfileModel steven = ProfileModel(
     uid: '7',
-    displayName: 'Steven',
-    photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in'
+    name: 'Steven',
+    photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in'
 );
 // FAVORITE CONTACTS
 // List<User> favorites = [sam, steven, olivia, john, greg];

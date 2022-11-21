@@ -1,11 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ingelt/business_logic/blocs/user_data_bloc.dart';
+import 'package:ingelt/business_logic/blocs/user_data_event.dart';
+import 'package:ingelt/business_logic/blocs/user_data_state.dart';
+import 'package:ingelt/data/models/group_model.dart';
+import 'package:ingelt/data/models/user_data_model.dart';
 import 'package:ingelt/shared/constants.dart';
+import '../../business_logic/blocs/profile_bloc.dart';
+import '../../business_logic/blocs/profile_event.dart';
+import '../../business_logic/blocs/profile_state.dart';
+import '../../data/models/profile_model.dart';
 import '../../shared/widgets/show_group.dart';
 
 class VerGroup extends StatefulWidget {
-  final String date, desc, category, admin, adminDesc;
+  // final String date, desc, category, admin, adminDesc;
   final bool onHomePage;
-  const VerGroup({Key? key, required this.date, required this.desc, required this.category, required this.admin, required this.adminDesc, required this.onHomePage}) : super(key: key);
+  final GroupModel? grpModel;
+  const VerGroup({Key? key,
+    // required this.date, required this.desc, required this.category, required this.admin, required this.adminDesc,
+  required this.onHomePage, required this.grpModel}) : super(key: key);
 
   @override
   State<VerGroup> createState() => _VerGroupState();
@@ -20,7 +34,16 @@ class _VerGroupState extends State<VerGroup> {
   );
 
   @override
+  void initState() {
+    context.read<ProfileBloc>().add(GetProfileEvent(uid: widget.grpModel!.grpAdmin));
+    context.read<UserDataBloc>().add(GetUserDataEvent(uid: widget.grpModel!.grpAdmin));
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: () {
         showModalBottomSheet<void>(
@@ -31,8 +54,8 @@ class _VerGroupState extends State<VerGroup> {
             context: context, 
             builder: (BuildContext context) {
               return Wrap(    // to control height of the modalsheetbottom(according to its content)
-                children: const [
-                  ShowGroup(),
+                children: [
+                  ShowGroup(grpModel: widget.grpModel,),
                 ],
               );
             }
@@ -56,17 +79,17 @@ class _VerGroupState extends State<VerGroup> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-                '| ${widget.date}',
+                '| ${widget.grpModel?.date}',
               style: customStyle.copyWith(fontSize: 15.0, fontWeight: FontWeight.w400),
             ),
             const SizedBox(height: 3.0,),
             Text(
-                widget.desc,
+                '${widget.grpModel?.description}',
               maxLines: 2,
               style: customStyle.copyWith(fontSize: 15.0, fontWeight: FontWeight.w700, overflow: TextOverflow.ellipsis,),
             ),
             Text(
-                widget.category,
+                '${widget.grpModel?.category}',
               style: customStyle.copyWith(fontSize: 12.0, fontWeight: FontWeight.w400, letterSpacing: 1.0),
             ),
             const SizedBox(height: 3.0,),
@@ -121,49 +144,93 @@ class _VerGroupState extends State<VerGroup> {
               color: Colors.white,
               thickness: 1.5,
             ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                const CircleAvatar(
-                  // backgroundColor: Colors.black,
-                  backgroundImage: AssetImage(
-                      'assets/person.jpg'
-                    ),
-                  radius: 20.0,
-                ),
-                const SizedBox(width: 10.0,),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          BlocBuilder<ProfileBloc, ProfileState>(
+              builder: (context, state) {
+              if (state is ProfileLoadedState) {
+                final ProfileModel? profileModel = state.profileModel;
+                return profileModel != null ? Row(
                   mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                        widget.admin,
-                      style: customStyle.copyWith(fontSize: 13.0, fontWeight: FontWeight.w600, letterSpacing: 0.0),
-                    ),
-                    Container(
-                      // color: Colors.red,
-                      width: MediaQuery.of(context).size.width*0.55,
-                      height: 30.0,
-                      alignment: Alignment.center,
-                      child: Text(
-                        widget.adminDesc,
-                        // "Hello I am Priyanshu, the finance non-expert you must never contact for financial advices. However do ping me up for any webdev or appdev query.",
-                        maxLines: 2,
-                        style: customStyle.copyWith(fontSize: 11.0, fontWeight: FontWeight.w400, overflow: TextOverflow.ellipsis,),
-                        // style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.w700, overflow: TextOverflow.ellipsis,),
+                    profileModel.photoURL == null ? const CircleAvatar(
+                      // backgroundColor: Colors.black,
+                      backgroundImage: AssetImage(
+                          'assets/person.jpg'
                       ),
+                      radius: 20.0,
+                    ) : CircleAvatar(
+                      // backgroundColor: Colors.black,
+                      backgroundImage: NetworkImage(
+                          profileModel.photoURL!
+                      ),
+                      radius: 20.0,
                     ),
-                  ],
-                ),
+                    const SizedBox(width: 10.0,),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Text(
+                          // widget.admin,
+                          '${profileModel.name}',
+                          style: customStyle.copyWith(fontSize: 13.0,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.0),
+                        ),
+                        Container(
+                          // color: Colors.red,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width * 0.55,
+                          height: 30.0,
+                          alignment: Alignment.centerLeft,
+                          child: BlocBuilder<UserDataBloc, UserDataState>(
+                            builder: (context, state) {
+                              if(state is UserDataLoadedState) {
+                                UserDataModel? userDataModel = state.userDataModel;
+                                return userDataModel != null ?
+                                Text(
+                                  // '${userDataModel.working}',
+                                  // widget.adminDesc,
+                                  "Hello I am Priyanshu, the finance non-expert you must never contact for financial advices. However do ping me up for any webdev or appdev query.",
+                                  maxLines: 2,
+                                  style: customStyle.copyWith(fontSize: 11.0,
+                                    fontWeight: FontWeight.w400,
+                                    overflow: TextOverflow.ellipsis,),
+                                  // style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.w700, overflow: TextOverflow.ellipsis,),
+                                ) : const SizedBox.shrink();
+                              } else if (state is UserDataLoadingState) {
+                                return CircularProgressIndicator(color: AppThemeData.primaryAppColor,);
+                              } else if (state is UserDataErrorState) {
+                                return Center(child: Text(state.error),);
+                              } else {
+                                print(state);
+                                return const Center(child: Text("Some error occurred"),);
+                              }
+                            }
+                          ),
+                        ),
+                      ],
+                    ),
 
-                const Icon(
-                  Icons.verified,
-                  color: Colors.white,
-                )
-              ],
-            ),
+                    const Icon(
+                      Icons.verified,
+                      color: Colors.white,
+                    )
+                  ],
+                ) : const SizedBox.shrink();
+              } else if (state is ProfileLoadingState) {
+                return CircularProgressIndicator(color: AppThemeData.primaryAppColor,);
+              } else if (state is ProfileErrorState) {
+                return Center(child: Text(state.error),);
+              } else {
+                print(state);
+                return const Center(child: Text("Some error occurred"),);
+              }
+            }
+          ),
 
           ],
         ),

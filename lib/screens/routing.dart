@@ -6,7 +6,7 @@ import 'package:ingelt/screens/home_page/home.dart';
 import 'package:ingelt/screens/notifications_page/notifications.dart';
 import 'package:ingelt/screens/profile_page/profile.dart';
 import 'package:ingelt/shared/constants.dart';
-import '../models/user_model.dart';
+import '../data/models/profile_model.dart';
 
 class BottomRouting extends StatefulWidget {
   const BottomRouting({Key? key}) : super(key: key);
@@ -15,7 +15,6 @@ class BottomRouting extends StatefulWidget {
   State<BottomRouting> createState() => _BottomRoutingState();
 }
 
-final UserModel userrrrr = UserModel(uid: '0', displayName: 'Priyanshu', photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in');
 class _BottomRoutingState extends State<BottomRouting> {
   final user = FirebaseAuth.instance.currentUser!;
 

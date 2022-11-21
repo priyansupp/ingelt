@@ -15,7 +15,6 @@ class _GroupGoalsState extends State<GroupGoals> {
   List<String> growthTopics = ['Concept', 'Business Model', 'Revenue Model', 'Product', 'Launch Strategy', 'Marketing Strategy'];
 
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -36,6 +35,7 @@ class _GroupGoalsState extends State<GroupGoals> {
               height: 220.0,
               width: 20.0,
               child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: 6,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
@@ -56,7 +56,7 @@ class _GroupGoalsState extends State<GroupGoals> {
                       ) : Icon(
                         Icons.circle,
                         color: AppThemeData.blackishTextColor,
-                        size: 15.0,
+                        size: 17.5,
                       ),
                       index != 5 ? const Text(
                         '|',

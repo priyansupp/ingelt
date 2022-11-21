@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ingelt/shared/constants.dart';
+import '../../data/models/user_grpdata_model.dart';
 import 'ally_req_group.dart';
 
 class Request extends StatefulWidget {
-  const Request({Key? key}) : super(key: key);
+  final UserGrpDataModel? userGrpDataModel;
+  const Request({Key? key, required this.userGrpDataModel}) : super(key: key);
 
   @override
   State<Request> createState() => _RequestState();
@@ -16,24 +18,26 @@ class _RequestState extends State<Request> {
       padding: const EdgeInsets.only(top: 5.0, right: 15.0, left: 15.0),
       color: Colors.white,
       // width: MediaQuery.of(context).size.width*0.8,
-      child: Column(
+      child: widget.userGrpDataModel != null ? widget.userGrpDataModel?.requestedToJoin != null ? Column(
         children: [
 
           Expanded(
             child: ListView.builder(
               itemBuilder: (context, index) {
-                if(index == 0) {
-                  return const DayWidget(day: 'Today');
-                } else if (index == 3) {
-                  return const DayWidget(day: 'This Week');
-                }
-                return const AllyReqGroup();
+                // if(index == 0) {
+                //   return const DayWidget(day: 'Today');
+                // } else if (index == 3) {
+                //   return const DayWidget(day: 'This Week');
+                // }
+                print(index);
+                return AllyReqGroup(grpId: widget.userGrpDataModel?.requestedToJoin![index], isAlly: false);
               },
-              itemCount: 10,
+              itemCount: widget.userGrpDataModel?.requestedToJoin!.length,
             ),
           ),
         ],
-      ),
+      ) : const SizedBox.shrink()
+          : const SizedBox.shrink()
     );
   }
 }

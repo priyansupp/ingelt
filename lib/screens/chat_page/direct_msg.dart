@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ingelt/models/message_model.dart';
-import 'package:ingelt/models/user_model.dart';
+import 'package:ingelt/data/models/message_model.dart';
+import 'package:ingelt/data/models/profile_model.dart';
 import 'package:ingelt/shared/widgets/circular_pic.dart';
 import 'package:ingelt/shared/constants.dart';
 
 class DM extends StatefulWidget {
-  final UserModel user;
+  final ProfileModel user;
 
   const DM({Key? key, required this.user}) : super(key: key);
 
@@ -166,7 +166,7 @@ class _DMState extends State<DM> {
                     left: 70.0,
                     top: 15.0,
                     child: Text(
-                      widget.user.displayName,
+                      widget.user.name,
                       style: TextStyle(
                         fontSize: 25.0,
                         fontWeight: FontWeight.w700,

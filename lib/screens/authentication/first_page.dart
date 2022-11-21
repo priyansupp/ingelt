@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class FirstPage extends StatefulWidget {
   final Function onClickedFirstPage;
@@ -12,7 +13,7 @@ class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppThemeData.blackishTextColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -35,8 +36,8 @@ class _FirstPageState extends State<FirstPage> {
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width * 0.8, 60.0),
-                primary: Theme.of(context).colorScheme.secondary,
-                onPrimary: Colors.white,
+                backgroundColor: AppThemeData.secondaryAppColor,
+                foregroundColor: Colors.white,
                 shape: const StadiumBorder()        // creates rounded borders
               ),
               child: const Text(
@@ -52,10 +53,10 @@ class _FirstPageState extends State<FirstPage> {
                 widget.onClickedFirstPage(2);     // to signup page
               },
               style: OutlinedButton.styleFrom(
-                  primary: Theme.of(context).colorScheme.secondary,
+                  backgroundColor: AppThemeData.secondaryAppColor,
                   minimumSize: Size(MediaQuery.of(context).size.width * 0.8, 60.0),
                   side: BorderSide(
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: AppThemeData.secondaryAppColor,
                   ),
                   shape: const StadiumBorder()        // creates rounded borders
               ),
@@ -63,6 +64,7 @@ class _FirstPageState extends State<FirstPage> {
                 'Sign up',
                 style: TextStyle(
                   fontSize: 15.0,
+                  color: Colors.white,
                 ),
               ),
             ),

@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ingelt/business_logic/blocs/profile_event.dart';
 import 'package:ingelt/screens/authentication/google_signin.dart';
 import 'package:ingelt/screens/authentication/phone_login.dart';
 import 'package:ingelt/screens/authentication/email_login.dart';
 import 'package:ingelt/shared/widgets/loading.dart';
 import 'package:provider/provider.dart';
+import 'package:ingelt/shared/constants.dart';
+import '../../business_logic/blocs/profile_bloc.dart';
+
 
 class Login extends StatefulWidget {
   final Function onClickedLogin;
@@ -75,9 +81,14 @@ class _LoginState extends State<Login> {
 
             // google sign in button
             ElevatedButton.icon(
-                onPressed: () {
+                onPressed: () async {
                   final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-                  provider.googleLogin();
+                  late GoogleSignInAccount googleUser;
+                  await provider.googleLogin().then((value) => {
+                    googleUser = provider.user,
+                    print(googleUser.photoUrl),
+                    context.read<ProfileBloc>().add(SaveProfileInfoEvent(photoURL: googleUser.photoUrl, email: googleUser.email, name: googleUser.displayName!, phone: null, location: null, skill: null, designation: null, company: null, website: null, university: null)),
+                  });
                 },
                 icon: const FaIcon(FontAwesomeIcons.google),
                 label: const Text(
@@ -87,8 +98,8 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                onPrimary: Theme.of(context).colorScheme.primary,   // color of content on the button, i.e the icon and text
+                backgroundColor: Colors.white,
+                foregroundColor: AppThemeData.primaryAppColor,   // color of content on the button, i.e the icon and text
                 minimumSize: Size(MediaQuery.of(context).size.width * 0.8, 60.0),
                 shape: const StadiumBorder(),
               ),
@@ -97,7 +108,7 @@ class _LoginState extends State<Login> {
 
             // sign up link
             Divider(
-              color: Theme.of(context).colorScheme.primary,
+              color: AppThemeData.primaryAppColor,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -107,7 +118,7 @@ class _LoginState extends State<Login> {
                   child: Text(
                     'Sign Up',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: AppThemeData.secondaryAppColor,
                     ),
                   ),
                   onPressed: () {

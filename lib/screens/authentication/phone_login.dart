@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ingelt/shared/constants.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class PhoneLogin extends StatefulWidget {
   final Function setPhoneScreen;
@@ -29,7 +30,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
               labelText: "Phone",
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: AppThemeData.secondaryAppColor,
                   width: 2.0,
                 ),
                 borderRadius:
@@ -37,7 +38,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: AppThemeData.primaryAppColor,
                   width: 2.0,
                 ),
                 borderRadius:
@@ -59,7 +60,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 labelText: "Phone",
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: AppThemeData.secondaryAppColor,
                     width: 2.0,
                   ),
                   borderRadius:
@@ -67,7 +68,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: AppThemeData.primaryAppColor,
                     width: 2.0,
                   ),
                   borderRadius:
@@ -94,7 +95,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
           ),
           style: ElevatedButton.styleFrom(
             minimumSize: Size(MediaQuery.of(context).size.width * 0.8, 60.0),
-            primary: Theme.of(context).colorScheme.secondary,
+            foregroundColor: AppThemeData.secondaryAppColor,
             shape: const StadiumBorder(),
           ),
         ),
@@ -106,7 +107,7 @@ class _PhoneLoginState extends State<PhoneLogin> {
           child: Text(
             'Login via Email and Password',
             style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
+                color: AppThemeData.secondaryAppColor,
                 fontSize: 15.0,
                 decoration: TextDecoration.underline
             ),

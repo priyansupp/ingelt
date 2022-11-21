@@ -11,20 +11,14 @@ class FetchHor extends StatefulWidget {
 class _FetchHorState extends State<FetchHor> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      // physics: ScrollPhysics(
-      //   parent:
-      // ),
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return HorGroup();
+      },
+      itemCount: 10,
       padding: const EdgeInsets.all(0),
       scrollDirection: Axis.horizontal,
       itemExtent: 220.0,  // to fix the width of each item
-      children: const <Widget>[
-        HorGroup(),
-        HorGroup(),
-        HorGroup(),
-        HorGroup(),
-        HorGroup(),
-      ],
     );
   }
 }

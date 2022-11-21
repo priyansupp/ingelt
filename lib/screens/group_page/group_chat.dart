@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:ingelt/models/message_model.dart';
-import 'package:ingelt/models/user_model.dart';
+import 'package:ingelt/data/models/message_model.dart';
+import 'package:ingelt/data/models/profile_model.dart';
 import 'package:ingelt/shared/widgets/circular_pic.dart';
 import 'group_info.dart';
 import 'package:ingelt/shared/constants.dart';
 
 class GroupChat extends StatefulWidget {
-  final UserModel user;
+  final ProfileModel user;
 
 
   const GroupChat({Key? key, required this.user}) : super(key: key);
@@ -39,7 +39,7 @@ class _GroupChatState extends State<GroupChat> {
           Row(
             children: [
               isMe ? const SizedBox.shrink() : Text(
-                '${message.sender.displayName} | ',
+                '${message.sender.name} | ',
                 style: TextStyle(
                   color: AppThemeData.primaryAppColor,
                   fontSize: 18.0,
@@ -213,7 +213,7 @@ class _GroupChatState extends State<GroupChat> {
                     left: 70.0,
                     top: 15.0,
                     child: Text(
-                      widget.user.displayName,
+                      widget.user.name,
                       style: TextStyle(
                         fontSize: 25.0,
                         fontWeight: FontWeight.w700,
@@ -309,7 +309,7 @@ class _GroupChatState extends State<GroupChat> {
 // import 'package:flutter/material.dart';
 // import 'package:ingelt/models/group_model.dart';
 // import 'package:ingelt/models/message_model.dart';
-// import 'package:ingelt/models/user_model.dart';
+// import 'package:ingelt/models/profile_model.dart';
 //
 // class GroupChat extends StatefulWidget {
 //   final GroupModel group;

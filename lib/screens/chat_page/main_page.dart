@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../models/user_model.dart';
+import '../../data/models/profile_model.dart';
 import 'direct_msg.dart';
 import 'package:ingelt/shared/constants.dart';
 
@@ -37,6 +37,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             decoration: const BoxDecoration(
@@ -49,106 +50,107 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                 )
             ),
             width: MediaQuery.of(context).size.width,
-            height: 80.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            height: 110.0,
+            child: Column(
               children: [
-                Image(
-                  width: 85.0,
-                  height: 50.0,
-                  image: AssetImage(
-                      'assets/ingelt-logo.png'
-                  ),
-                  fit: BoxFit.fill,
-                  color: AppThemeData.blackishTextColor,
-                ),
+                const SizedBox(height: 10.0,),
 
-                Expanded(
-                  child: Material(
-                    elevation: 4.0,
-                    shadowColor: Colors.grey,
-                    shape: const StadiumBorder(),
-                    // borderRadius: const BorderRadius.all(Radius.circular(40.0)),
-                    child: SizedBox(
-                      height: 30.0,
-                      child: TextField(
-                        controller: _searchController,
-                        textInputAction: TextInputAction.search,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.only(left: 40.0, right: 10.0),
-                              child: Icon(
-                                Icons.search,
-                                color: AppThemeData.blackishTextColor,
-                                size: 20.0,
-                              ),
-                            ),
-                            hintText: 'Search Chat',
-                            hintStyle: const TextStyle(
-                              fontSize: 16.0,
-                            ),
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 0.0,
-                                  style: BorderStyle.none
-                              ),
-                              borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 0.0,
-                                  style: BorderStyle.none
-                              ),
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            )
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image(
+                      width: 85.0,
+                      height: 50.0,
+                      image: const AssetImage(
+                          'assets/ingelt-logo.png'
+                      ),
+                      fit: BoxFit.fill,
+                      color: AppThemeData.blackishTextColor,
+                    ),
 
+                    const SizedBox(width: 5.0,),
+
+                    Expanded(
+                      child: Material(
+                        elevation: 4.0,
+                        shadowColor: Colors.grey,
+                        shape: const StadiumBorder(),
+                        // borderRadius: const BorderRadius.all(Radius.circular(40.0)),
+                        child: SizedBox(
+                          height: 30.0,
+                          child: Center(
+                            child: TextField(
+                              controller: _searchController,
+                              textInputAction: TextInputAction.search,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  prefixIcon: Padding(
+                                    padding: const EdgeInsets.only(left: 40.0, right: 10.0),
+                                    child: Icon(
+                                      Icons.search,
+                                      color: AppThemeData.blackishTextColor,
+                                      size: 20.0,
+                                    ),
+                                  ),
+                                  hintText: 'Search Chat',
+                                  hintStyle: const TextStyle(
+                                    fontSize: 16.0,
+                                  ),
+                                  border: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 0.0,
+                                        style: BorderStyle.none
+                                    ),
+                                    borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 0.0,
+                                        style: BorderStyle.none
+                                    ),
+                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                  )
+
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
+
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.more_vert_rounded),
+                      color: AppThemeData.blackishTextColor,
+                      iconSize: 30.0,
+                    )
+                  ],
+                ),
+
+                // const SizedBox(height: 10.0,),
+
+                TabBar(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  labelColor: AppThemeData.blackishTextColor,
+                  labelStyle: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w500,
+                    // color: AppThemeData.blackishTextColor
                   ),
-                ),
-
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.more_vert_rounded),
-                  color: AppThemeData.blackishTextColor,
-                  iconSize: 30.0,
-                )
-              ],
-            ),
-          ),
-
-          Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                      'assets/home_title_bg.jpg',
+                  indicatorColor: AppThemeData.primaryAppColor,
+                  indicatorWeight: 2.5,
+                  controller: _tabController,
+                  // onTap: () {},
+                  tabs: const <Widget>[
+                    Tab(
+                      text: 'Chat',
                     ),
-                    opacity: 0.20,
-                    fit: BoxFit.cover
-                )
-            ),
-            child: TabBar(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              labelColor: AppThemeData.blackishTextColor,
-              labelStyle: const TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w500,
-                  // color: AppThemeData.blackishTextColor
-              ),
-              indicatorColor: AppThemeData.primaryAppColor,
-              indicatorWeight: 2.5,
-              controller: _tabController,
-              // onTap: () {},
-              tabs: const <Widget>[
-                Tab(
-                  text: 'Chat',
-                ),
-                Tab(
-                  text: 'Message',
+                    Tab(
+                      text: 'Message',
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -198,7 +200,7 @@ class FetchMessages extends StatefulWidget {
   @override
   State<FetchMessages> createState() => _FetchMessagesState();
 }
-final UserModel userrrrr = UserModel(uid: '0', displayName: 'Priyanshu', photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in');
+final ProfileModel userrrrr = ProfileModel(uid: '0', name: 'Priyanshu', photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in');
 
 class _FetchMessagesState extends State<FetchMessages> {
   @override
@@ -209,7 +211,7 @@ class _FetchMessagesState extends State<FetchMessages> {
         return const Conversation(name: 'Not riya', lastMessage: 'okk i will not call you');
       },
       itemCount: 6,
-    );;
+    );
   }
 }
 

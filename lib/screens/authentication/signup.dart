@@ -1,11 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ingelt/services/database.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ingelt/business_logic/blocs/user_grpdata_bloc.dart';
+import 'package:ingelt/business_logic/blocs/user_grpdata_event.dart';
 import 'package:ingelt/shared/constants.dart';
 import 'package:ingelt/shared/widgets/loading.dart';
 import 'package:ingelt/shared/utils.dart';
+
+import '../../business_logic/blocs/profile_bloc.dart';
+import '../../business_logic/blocs/profile_event.dart';
+
 
 class SignUp extends StatefulWidget {
   final Function onClickedSignUp;
@@ -36,8 +41,11 @@ class _SignUpState extends State<SignUp> {
   void dispose() {
     // disposes the controllers when the widget is unmounted from the widget tree.
     // TODO: implement dispose
+    // print(_nameController.text.trim());
+    // context.read<ProfileBloc>().add(SaveProfileInfoEvent(email: _emailController.text.trim(), name: _nameController.text.trim(), phone: _phoneController.text.trim(), location: null, skill: null, designation: null, company: null, website: null, university: null));
     _emailController.dispose();
     _passwordController.dispose();
+
     super.dispose();
   }
 
@@ -92,7 +100,7 @@ class _SignUpState extends State<SignUp> {
                       labelText: "Name",
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: AppThemeData.secondaryAppColor,
                           width: 2.0,
                         ),
                         borderRadius:
@@ -100,7 +108,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: AppThemeData.primaryAppColor,
                           width: 2.0,
                         ),
                         borderRadius:
@@ -125,7 +133,7 @@ class _SignUpState extends State<SignUp> {
                       labelText: "Email",
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: AppThemeData.secondaryAppColor,
                           width: 2.0,
                         ),
                         borderRadius:
@@ -133,7 +141,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: AppThemeData.primaryAppColor,
                           width: 2.0,
                         ),
                         borderRadius:
@@ -157,7 +165,7 @@ class _SignUpState extends State<SignUp> {
                       labelText: "Phone",
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: AppThemeData.secondaryAppColor,
                           width: 2.0,
                         ),
                         borderRadius:
@@ -165,7 +173,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: AppThemeData.primaryAppColor,
                           width: 2.0,
                         ),
                         borderRadius:
@@ -200,7 +208,7 @@ class _SignUpState extends State<SignUp> {
                       labelText: "Create Password",
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: AppThemeData.secondaryAppColor,
                           width: 2.0,
                         ),
                         borderRadius:
@@ -208,7 +216,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: AppThemeData.primaryAppColor,
                           width: 2.0,
                         ),
                         borderRadius:
@@ -242,7 +250,7 @@ class _SignUpState extends State<SignUp> {
                       labelText: "Confirm Password",
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: AppThemeData.secondaryAppColor,
                           width: 2.0,
                         ),
                         borderRadius:
@@ -250,7 +258,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: AppThemeData.primaryAppColor,
                           width: 2.0,
                         ),
                         borderRadius:
@@ -259,10 +267,10 @@ class _SignUpState extends State<SignUp> {
                     suffixIcon: IconButton(
                       icon: secureConfirmPassText ? Icon(
                           Icons.security,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: AppThemeData.primaryAppColor,
                       ) : Icon(
                         Icons.remove_red_eye,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: AppThemeData.primaryAppColor,
                       ),
                       onPressed: () {
                         setState(() => secureConfirmPassText = !secureConfirmPassText);
@@ -279,7 +287,7 @@ class _SignUpState extends State<SignUp> {
               ElevatedButton.icon(
                 onPressed: () {
                   if(_formKey.currentState!.validate()){
-                   signUp();
+                   signUp(context);
                   }
                 },         // signs up
                 icon: const Icon(
@@ -295,13 +303,13 @@ class _SignUpState extends State<SignUp> {
                 ),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(MediaQuery.of(context).size.width * 0.8, 60.0),
-                  primary: Theme.of(context).colorScheme.secondary,
+                  backgroundColor: AppThemeData.secondaryAppColor,
                   shape: const StadiumBorder(),
                 ),
               ),
               const SizedBox(height: 72.0,),
               Divider(
-                color: Theme.of(context).colorScheme.primary,
+                color: AppThemeData.primaryAppColor,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -311,7 +319,7 @@ class _SignUpState extends State<SignUp> {
                     child: Text(
                       'Sign In',
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: AppThemeData.secondaryAppColor,
                       ),
                     ),
                     onPressed: () {
@@ -326,17 +334,17 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
-  Future signUp() async {
+
+  Future signUp(BuildContext context) async {
 
     setState(() => loading = true);
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailController.text.trim(), password: _passwordController.text.trim());
-      User? user = userCredential.user;
-      await DatabaseService(uid: user!.uid).updateUserData(_emailController.text.trim(), _nameController.text, null, _phoneController.text);
+      // UserCredential userCredential = await
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailController.text.trim(), password: _passwordController.text.trim());
     } on FirebaseAuthException catch(e) {
       setState(() => loading = false);
-      // print('Couldn\'t Sign up with those credentials.');
+      // print('Could not Sign up with those credentials.');
       // print(e);
       Utils.showSnackBar(e.message);        // to show the database side error message on screen
     }

@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ingelt/models/user_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ingelt/data/models/profile_model.dart';
 import 'package:ingelt/screens/home_page/fetch_hor.dart';
+import '../../business_logic/blocs/profile_bloc.dart';
+import '../../business_logic/blocs/profile_event.dart';
 import 'fetch_general.dart';
 import 'fetch_specific.dart';
 import 'package:ingelt/shared/constants.dart';
@@ -16,13 +20,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   final TextEditingController _searchController = TextEditingController();
   late TabController _tabController;
-  final UserModel user = UserModel(uid: '0', displayName: 'priyanshu', photoURL: 'assets/person.jpg', phone: '9643763504', emailAddress: 'priyanshu@iitg.ac.in');
-  
+
+  final currentUser = FirebaseAuth.instance.currentUser;
+
 
   @override
   void initState() {
-    super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    super.initState();
   }
 
   @override

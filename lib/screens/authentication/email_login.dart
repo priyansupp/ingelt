@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ingelt/shared/constants.dart';
 import 'package:ingelt/shared/utils.dart';
+import 'package:ingelt/shared/constants.dart';
 
 class EmailLogin extends StatefulWidget {
   final Function setPhoneScreen;
@@ -47,7 +48,7 @@ class _EmailLoginState extends State<EmailLogin> {
                 labelText: "Email",
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: AppThemeData.secondaryAppColor,
                     width: 2.0,
                   ),
                   borderRadius:
@@ -55,7 +56,7 @@ class _EmailLoginState extends State<EmailLogin> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: AppThemeData.primaryAppColor,
                     width: 2.0,
                   ),
                   borderRadius:
@@ -77,7 +78,7 @@ class _EmailLoginState extends State<EmailLogin> {
                   labelText: "Password",
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: AppThemeData.secondaryAppColor,
                       width: 2.0,
                     ),
                     borderRadius:
@@ -85,7 +86,7 @@ class _EmailLoginState extends State<EmailLogin> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: AppThemeData.primaryAppColor,
                       width: 2.0,
                     ),
                     borderRadius:
@@ -116,7 +117,7 @@ class _EmailLoginState extends State<EmailLogin> {
             ),
             style: ElevatedButton.styleFrom(
               minimumSize: Size(MediaQuery.of(context).size.width * 0.8, 60.0),
-              primary: Theme.of(context).colorScheme.secondary,
+              primary: AppThemeData.secondaryAppColor,
               shape: const StadiumBorder(),
             ),
           ),
@@ -128,7 +129,7 @@ class _EmailLoginState extends State<EmailLogin> {
             child: Text(
               'Login via Phone number',
               style: TextStyle(
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: AppThemeData.secondaryAppColor,
                   fontSize: 15.0,
                   decoration: TextDecoration.underline
               ),

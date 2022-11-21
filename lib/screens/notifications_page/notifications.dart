@@ -15,7 +15,7 @@ class _NotificationsState extends State<Notifications> {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.0),
+          padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 7.0),
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(
@@ -26,31 +26,34 @@ class _NotificationsState extends State<Notifications> {
               )
           ),
           width: MediaQuery.of(context).size.width,
-          height: 110.0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image(
-                width: 100.0,
-                height: 60.0,
-                image: const AssetImage(
-                    'assets/ingelt-logo.png'
+          height: 100.0,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image(
+                  width: 100.0,
+                  height: 60.0,
+                  image: const AssetImage(
+                      'assets/ingelt-logo.png'
+                  ),
+                  fit: BoxFit.fill,
+                  color: AppThemeData.blackishTextColor
                 ),
-                fit: BoxFit.fill,
-                color: AppThemeData.blackishTextColor
-              ),
-              const SizedBox(height: 10.0,),
-              Text(
-                ' Notifications',
-                style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                    height: -0.01,
-                  color: AppThemeData.blackishTextColor,
-                  letterSpacing: 1
+                const SizedBox(height: 10.0,),
+                Text(
+                  ' Notifications',
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                      height: -0.01,
+                    color: AppThemeData.blackishTextColor,
+                    letterSpacing: 1
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
 

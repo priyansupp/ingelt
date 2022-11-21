@@ -1,10 +1,18 @@
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ingelt/models/group_model.dart';
-import 'package:ingelt/models/user_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ingelt/business_logic/blocs/group_bloc.dart';
+import 'package:ingelt/business_logic/blocs/group_event.dart';
+import 'package:ingelt/data/models/group_model.dart';
+import 'package:ingelt/data/models/profile_model.dart';
 import 'package:ingelt/shared/constants.dart';
-import 'package:ingelt/shared/utils.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+import '../../business_logic/blocs/user_grpdata_bloc.dart';
+import '../../business_logic/blocs/user_grpdata_event.dart';
 
 class CreateGroup extends StatefulWidget {
   const CreateGroup({Key? key}) : super(key: key);
@@ -15,13 +23,44 @@ class CreateGroup extends StatefulWidget {
 
 class _CreateGroupState extends State<CreateGroup> {
 
-  final UserModel groupAdmin = groups[0].admin;
 
   // controllers
   final TextEditingController _topicController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final currentUser = FirebaseAuth.instance.currentUser;
+
+  final _formKey = GlobalKey<FormState>();
+
+  DateTime selectedDate = DateTime.now();
 
   var isChecked = false;
+
+  //
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //       context: context,
+  //       initialDate: selectedDate,
+  //       initialDatePickerMode: DatePickerMode.day,
+  //       firstDate: DateTime(2015),
+  //       lastDate: DateTime(2101));
+  //   if (picked != null) {
+  //     setState(() {
+  //       selectedDate = picked;
+  //       _dateController.text = DateFormat.yMd().format(selectedDate);
+  //     }
+  //   );
+  //   }
+  // }
+
+  @override
+  void initState() {
+    // _dateController.text = DateTime.now().toString();
+    // TODO: implement initState
+    super.initState();
+  }
 
 
   @override
@@ -105,7 +144,7 @@ class _CreateGroupState extends State<CreateGroup> {
                 height: 40.0,
                 child: Center(
                   child: TextFormField(
-                    controller: _topicController,
+                    controller: _nameController,
                     textInputAction: TextInputAction.next,
                     textAlign: TextAlign.start,
                     textAlignVertical: TextAlignVertical.top,
@@ -129,6 +168,61 @@ class _CreateGroupState extends State<CreateGroup> {
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
                       )
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 10.0,),
+
+
+              Container(
+                margin: const EdgeInsets.fromLTRB(15, 0, 15, 5),
+                child: const Text(
+                  'Topic',
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.85,
+                height: 40.0,
+                child: Center(
+                  child: TextFormField(
+                    // validator: (value) {            // to show frontend form validation error on screen
+                    //   if(value == null) {
+                    //     return 'Topic can\'t be null.';
+                    //   } else {
+                    //     return value;
+                    //   }
+                    // },
+                    controller: _topicController,
+                    textInputAction: TextInputAction.next,
+                    textAlign: TextAlign.start,
+                    textAlignVertical: TextAlignVertical.top,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0
+                    ),
+                    decoration: const InputDecoration(
+                        fillColor: Color(0xEE023020),
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 0.0,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+                        )
                     ),
                   ),
                 ),
@@ -175,7 +269,7 @@ class _CreateGroupState extends State<CreateGroup> {
                           width: 1.0,
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
-                      )
+                      ),
                   ),
                 ),
               ),
@@ -201,34 +295,53 @@ class _CreateGroupState extends State<CreateGroup> {
                           ),
                         ),
                       ),
+                      // DateTimePicker(
+                      //   initialValue: '',
+                      //   firstDate: DateTime(2000),
+                      //   lastDate: DateTime(2100),
+                      //   dateLabelText: 'Date',
+                      //   onChanged: (val) => print(val),
+                      //   validator: (val) {
+                      //     print(val);
+                      //     return null;
+                      //   },
+                      //   onSaved: (val) => print(val),
+                      // ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.55,
                         height: 40.0,
-                        child: TextFormField(
-                          controller: _topicController,
-                          textInputAction: TextInputAction.next,
-                          textAlign: TextAlign.start,
-                          textAlignVertical: TextAlignVertical.top,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0
-                          ),
-                          decoration: const InputDecoration(
-                              fillColor: Color(0xEE023020),
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 0.0,
+                        child: Center(
+                          child: TextFormField(
+                            controller: _dateController,
+                            textInputAction: TextInputAction.next,
+                            textAlign: TextAlign.start,
+                            textAlignVertical: TextAlignVertical.top,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0
+                            ),
+                            decoration: const InputDecoration(
+                              // hintText: 'DD/MM/YY',
+                                // alignLabelWithHint: false,
+                                // hintStyle: TextStyle(
+                                //   color: Colors.white
+                                // ),
+                                fillColor: Color(0xEE023020),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 0.0,
+                                  ),
+                                  borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
                                 ),
-                                borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
-                              )
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+                                )
+                            ),
                           ),
                         ),
                       ),
@@ -253,7 +366,7 @@ class _CreateGroupState extends State<CreateGroup> {
                         width: MediaQuery.of(context).size.width * 0.25,
                         height: 40.0,
                         child: TextFormField(
-                          controller: _topicController,
+                          controller: _timeController,
                           textInputAction: TextInputAction.next,
                           textAlign: TextAlign.start,
                           textAlignVertical: TextAlignVertical.top,
@@ -303,7 +416,7 @@ class _CreateGroupState extends State<CreateGroup> {
                 width: MediaQuery.of(context).size.width * 0.85,
                 height: 40.0,
                 child: TextFormField(
-                  controller: _descriptionController,
+                  // controller: _descriptionController,
                   textInputAction: TextInputAction.next,
                   textAlign: TextAlign.start,
                   textAlignVertical: TextAlignVertical.top,
@@ -399,7 +512,32 @@ class _CreateGroupState extends State<CreateGroup> {
                           shape: const StadiumBorder()
                       ),
                       onPressed: () {
-
+                        // if(_formKey.currentState!.validate()) {
+                          GroupModel groupModel = GroupModel.fromJson({
+                            'GrpName': _nameController.text.trim(),
+                            'GrpAdmin': currentUser!.uid,
+                            'Time': _timeController.text.trim(),
+                            'Date': _dateController.text.trim(),
+                            'Participants': [currentUser!.uid],
+                            'Topic': _topicController.text.trim(),
+                            'Category': 'Education',
+                            'Level': 0,
+                            'Description': _descriptionController.text.trim(),
+                            'GrpId': null,
+                          });
+                          context.read<GroupBloc>().add(
+                              CreateGroupEvent(groupModel: groupModel));
+                          context.read<UserGrpDataBloc>().add(
+                              GetUserGrpDataEvent(uid: currentUser!.uid));
+                          Navigator.of(context).pop();
+                        // }
+                        // else {
+                        //   // Utils.showSnackBar("Please fill all the inputs");
+                        //   showTopSnackBar(OverlayState(), const CustomSnackBar.error(
+                        //     message:
+                        //     'Please fill all the fields!',
+                        //   ),);
+                        // }
                       },
                       child: const Text(
                         'Create',

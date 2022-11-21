@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ingelt/models/user_model.dart';
+import 'package:ingelt/data/models/profile_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ingelt/shared/widgets/group_goals.dart';
@@ -15,16 +15,16 @@ class GroupInfo extends StatefulWidget {
 
 class _GroupInfoState extends State<GroupInfo> {
 
-  final generalUser = FirebaseAuth.instance.currentUser!;   // user can be signed in from google or by mail
+  final currentUser = FirebaseAuth.instance.currentUser!;   // user can be signed in from google or by mail
 
   // getting the user with its uid from firestore
-  Future<UserModel?> readUser() async {
-    final documentReference = FirebaseFirestore.instance.collection('users').doc(generalUser.uid);
+  Future<ProfileModel?> readUser() async {
+    final documentReference = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
     final documentSnapshot = await documentReference.get();
     // print('hello fetching rn');
     if (documentSnapshot.exists) {
       // print(documentSnapshot.data());
-      return UserModel.fromJson(documentSnapshot.data()!);
+      return ProfileModel.fromJson(documentSnapshot.data()!);
     } else {
       // print('could not fetch');
       return null;
@@ -38,7 +38,7 @@ class _GroupInfoState extends State<GroupInfo> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: FutureBuilder<UserModel?>(
+      child: FutureBuilder<ProfileModel?>(
         future: readUser(),
         builder: (context, snapshot) {
           if(snapshot.hasData) {

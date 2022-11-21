@@ -27,23 +27,19 @@ class _ResearchExpState extends State<ResearchExp> {
           alignment: Alignment.center,
           child: Row(
             children: [
-              const CircleAvatar(
-                backgroundImage: AssetImage(
-                  'assets/ingelt-logo.png',
-                ),
-                radius: 30,
-              ),
-              const SizedBox(width: 5.0,),
+              Rating(percentage: widget.percentage),
+              const SizedBox(width: 10.0,),
               VerticalDivider(
                 thickness: 3.0,
                 color: AppThemeData.primaryAppColor
               ),
-              const SizedBox(width: 5.0,),
+              const SizedBox(width: 10.0,),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+
                     Text(
                       widget.topic,
                       style: TextStyle(
@@ -78,7 +74,7 @@ class _ResearchExpState extends State<ResearchExp> {
                 ),
               ),
               const SizedBox(width: 13.0,),
-              Rating(percentage: widget.percentage),
+
               const SizedBox(width: 20.0,),   // gap after the rating-circle
             ],
           )

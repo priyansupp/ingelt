@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:ingelt/services/database.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
@@ -30,7 +29,5 @@ class GoogleSignInProvider extends ChangeNotifier {
     UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credentials);    // signs up with the google credentials
     User? user = userCredential.user;
     notifyListeners();
-
-    await DatabaseService(uid: user!.uid).updateUserData(googleUser.email, googleUser.displayName!, googleUser.photoUrl!, null);
   }
 }

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:ingelt/shared/constants.dart';
 
 
-class ResearchBar extends StatefulWidget {
+class ForteBar extends StatefulWidget {
   final int percentage;
   final String text;
-  const ResearchBar({Key? key, required this.percentage, required this.text}) : super(key: key);
+  const ForteBar({Key? key, required this.percentage, required this.text}) : super(key: key);
 
   @override
-  State<ResearchBar> createState() => _ResearchBarState();
+  State<ForteBar> createState() => _ForteBarState();
 }
 
-class _ResearchBarState extends State<ResearchBar> {
+class _ForteBarState extends State<ForteBar> {
   @override
   Widget build(BuildContext context) {
     return Row(
