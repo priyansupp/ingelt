@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ingelt/business_logic/blocs/profile_state.dart';
+import 'package:ingelt/business_logic/blocs/user_data_bloc.dart';
+import 'package:ingelt/business_logic/blocs/user_data_state.dart';
 
+import '../../business_logic/blocs/profile_bloc.dart';
 import '../../data/models/profile_model.dart';
 import 'direct_msg.dart';
 import 'package:ingelt/shared/constants.dart';
@@ -182,14 +187,29 @@ class FetchChats extends StatefulWidget {
 class _FetchChatsState extends State<FetchChats> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width*0.8,
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-        return const Conversation(name: 'Riya', lastMessage: 'okk i will call you');
+    return BlocBuilder<UserDataBloc, UserDataState>(
+      builder: (context, state) {
+        if(state is ConnectionsLoadedState) {
+          List<ProfileModel>? connections = state.connections;
+          if(connections!.isEmpty) return const SizedBox.shrink();
+
+          return SizedBox(
+            width: MediaQuery.of(context).size.width*0.8,
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return Conversation(profileModel: connections[index], lastMessage: 'okk i will call you');
+              },
+              itemCount: connections.length,
+            ),
+          );
+        } else if (state is ConnectionsLoadingState) {
+          return const CircularProgressIndicator();
+        } else if (state is UserDataErrorState) {
+          return Center(child: Text(state.error),);
+        } else {
+          return const Center(child: Text("Some error occurred"),);
+        }
       },
-      itemCount: 12,
-      ),
     );
   }
 }
@@ -200,24 +220,41 @@ class FetchMessages extends StatefulWidget {
   @override
   State<FetchMessages> createState() => _FetchMessagesState();
 }
-final ProfileModel userrrrr = ProfileModel(uid: '0', name: 'Priyanshu', photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in');
 
 class _FetchMessagesState extends State<FetchMessages> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      itemBuilder: (context, index) {
-        return const Conversation(name: 'Not riya', lastMessage: 'okk i will not call you');
-      },
-      itemCount: 6,
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        if(state is AllProfilesLoadedState) {
+          List<ProfileModel>? profiles = state.profiles;
+          if(profiles!.isEmpty) return const SizedBox.shrink();
+
+          return SizedBox(
+            width: MediaQuery.of(context).size.width*0.8,
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return Conversation(profileModel: profiles[index], lastMessage: 'okk i will not call you');
+              },
+              itemCount: profiles.length,
+            ),
+          );
+        } else if (state is AllProfilesLoadingState) {
+          return const CircularProgressIndicator();
+        } else if (state is ProfileErrorState) {
+          return Center(child: Text(state.error),);
+        } else {
+          return const Center(child: Text("Some error occurred"),);
+        }
+      }
     );
   }
 }
 
 class Conversation extends StatefulWidget {
-  final String name, lastMessage;
-  const Conversation({Key? key, required this.name, required this.lastMessage}) : super(key: key);
+  final String lastMessage;
+  final ProfileModel profileModel;
+  const Conversation({Key? key, required this.lastMessage, required this.profileModel}) : super(key: key);
 
   @override
   State<Conversation> createState() => _ConversationState();
@@ -229,7 +266,7 @@ class _ConversationState extends State<Conversation> {
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => DM(user: userrrrr),));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => DM(user: widget.profileModel),));
       },
       child: Column(
         children: [
@@ -256,7 +293,7 @@ class _ConversationState extends State<Conversation> {
                       children: [
                         const SizedBox(height: 7.0,),
                         Text(
-                          widget.name,
+                          widget.profileModel.name,
                           style: TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
@@ -278,32 +315,32 @@ class _ConversationState extends State<Conversation> {
                   ],
                 ),
 
-                Column(
-                  children: [
-                    const Text(
-                      '15 mins',
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black54
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppThemeData.primaryAppColor,
-                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 1.0),
-                      child: const Text(
-                        '12',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.0
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                // Column(
+                //   children: [
+                //     const Text(
+                //       '15 mins',
+                //       style: TextStyle(
+                //           fontSize: 16.0,
+                //           fontWeight: FontWeight.w400,
+                //           color: Colors.black54
+                //       ),
+                //     ),
+                //     Container(
+                //       decoration: BoxDecoration(
+                //         color: AppThemeData.primaryAppColor,
+                //         borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                //       ),
+                //       padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 1.0),
+                //       child: const Text(
+                //         '12',
+                //         style: TextStyle(
+                //           color: Colors.white,
+                //           fontSize: 15.0
+                //         ),
+                //       ),
+                //     )
+                //   ],
+                // ),
 
               ],
             ),

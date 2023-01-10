@@ -18,7 +18,7 @@ class BottomRouting extends StatefulWidget {
 class _BottomRoutingState extends State<BottomRouting> {
   final user = FirebaseAuth.instance.currentUser!;
 
-  int _selectedIndex = 4;
+  int _selectedIndex = 1;
 
   final screens = [
     const Home(),

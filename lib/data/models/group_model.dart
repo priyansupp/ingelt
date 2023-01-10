@@ -24,20 +24,6 @@ class GroupModel {
     required this.category,
   });
 
-  // getting data from database
-
-  // GroupModel.fromJson(Map<String, dynamic> map) {
-  //   grpName = map['GrpName'];
-  //   grpAdmin = map['GrpAdmin'];
-  //   time = map['Time'];
-  //   date = map['Date'];
-  //   participants = map['Participants'];
-  //   topic = map['Topic'];
-  //   description = map['Description'];
-  //   level = map['Level'];
-  //   category = map['Category'];
-  // }
-
   static GroupModel fromJson(Map<String, dynamic> map) => GroupModel(
       grpName: map['GrpName'],
       grpId: map['GrpId'],

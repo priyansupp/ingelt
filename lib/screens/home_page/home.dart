@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ingelt/data/models/profile_model.dart';
 import 'package:ingelt/screens/home_page/fetch_hor.dart';
+import 'package:ingelt/screens/search_page/search_home.dart';
 import '../../business_logic/blocs/profile_bloc.dart';
 import '../../business_logic/blocs/profile_event.dart';
 import 'fetch_general.dart';
@@ -18,9 +19,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
 
-  final TextEditingController _searchController = TextEditingController();
   late TabController _tabController;
-
   final currentUser = FirebaseAuth.instance.currentUser;
 
 
@@ -61,7 +60,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 Image(
                   width: 85.0,
                   height: 50.0,
-                  image: AssetImage(
+                  image: const AssetImage(
                       'assets/ingelt-logo.png'
                   ),
                   fit: BoxFit.fill,
@@ -70,49 +69,44 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
                 const SizedBox(width: 10.0,),
                 Expanded(
-                  child: SizedBox(
-                    height: 35.0,
-                    // width: MediaQuery.of(context).size.width * 0.75,
-                    child: Material(
-                      elevation: 4.0,
-                      shadowColor: Colors.grey,
-                      shape: const StadiumBorder(),
-                      // borderRadius: const BorderRadius.all(Radius.circular(40.0)),
-                      child: TextField(
-                        controller: _searchController,
-                        textInputAction: TextInputAction.search,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.only(left: 70.0, right: 10.0),
-                            child: Icon(
-                              Icons.search,
-                              color: AppThemeData.blackishTextColor,
-                              size: 20.0,
-                            ),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SearchHome()));
+                    },
+                    child: SizedBox(
+                      height: 35.0,
+                      // width: MediaQuery.of(context).size.width * 0.75,
+                      child: Material(
+                        elevation: 4.0,
+                        shadowColor: Colors.grey,
+                        shape: const StadiumBorder(),
+                        // borderRadius: const BorderRadius.all(Radius.circular(40.0)),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(2.0)),
                           ),
-                          hintText: 'Ingelt Xplore',
-                          hintStyle: const TextStyle(
-                            fontSize: 16.0,
-                          ),
-                          border: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 0.0,
-                              style: BorderStyle.none
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 0.0,
-                                style: BorderStyle.none
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          )
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.search,
+                                color: AppThemeData.blackishTextColor,
+                                size: 20.0,
+                              ),
 
-                        ),
+                              const SizedBox(width: 5.0,),
+
+                              const Text(
+                                'Ingelt Xplore',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        )
                       ),
                     ),
                   ),

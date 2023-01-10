@@ -85,7 +85,6 @@ class GroupRepository {
   }
 
   Future<List<GroupModel>>? getGeneralGroups() async {
-    List<GroupModel> generalGroups = [];
     final CollectionReference collectionReference = FirebaseFirestore.instance.collection('groups');
     // Get docs from collection reference
     QuerySnapshot querySnapshot = await collectionReference.get();

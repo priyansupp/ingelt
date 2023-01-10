@@ -86,3 +86,6 @@ class GeneralGroupsLoaded extends GroupState {
   List<Object?> get props => [generalGroups];
 
 }
+
+
+

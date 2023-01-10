@@ -71,3 +71,24 @@ class SetFeaturedEvent extends UserDataEvent {
 }
 
 
+class GetConnectionsRequestedFromEvent extends UserDataEvent {
+  final String uid;
+  GetConnectionsRequestedFromEvent({required this.uid});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [uid];
+}
+
+
+class GetSpecificGroupsEvent extends UserDataEvent {
+  final String uid;
+  GetSpecificGroupsEvent({required this.uid});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [uid];
+}
+
+
+

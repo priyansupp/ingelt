@@ -2,8 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ingelt/shared/constants.dart';
 
+import '../../data/models/ingelt_group_model.dart';
+
 class HorGroup extends StatefulWidget {
-  const HorGroup({Key? key}) : super(key: key);
+  final IngeltGroupModel ingeltGroupModel;
+  const HorGroup({Key? key, required this.ingeltGroupModel}) : super(key: key);
 
   @override
   State<HorGroup> createState() => _HorGroupState();
@@ -21,7 +24,7 @@ class _HorGroupState extends State<HorGroup> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 7.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 3.0),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(20.0)),
           gradient: LinearGradient(colors: [
@@ -39,13 +42,16 @@ class _HorGroupState extends State<HorGroup> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const Text(
-                'Finance',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 23.0,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.5,
+              SizedBox(
+                width: 110.0,
+                child: Text(
+                  '${widget.ingeltGroupModel.grpName}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 21.0,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.5,
+                  ),
                 ),
               ),
               SizedBox(
@@ -57,7 +63,7 @@ class _HorGroupState extends State<HorGroup> {
                   },
                   style: ElevatedButton.styleFrom(
                     // primary: Theme.of(context).colorScheme.primary,   // background color of button
-                    primary: Colors.white,
+                    backgroundColor: Colors.white,
                     shape: const StadiumBorder(),
                   ),
                   child: const Text(
@@ -112,18 +118,19 @@ class _HorGroupState extends State<HorGroup> {
               ),
               // const SizedBox(width: 15.0,),
               Text(
-                '658 Joined',
+                '${widget.ingeltGroupModel.participants.length} Joined',
                 style: customStyle,
               )
             ],
           ),
 
           // const SizedBox(height: 10.0,),
-          const Text(
-            'Description here is of something I am yet to understand but i must in order to complete the project. I am working although but the pace is not enough, but I think I will be able to sort it out.',
+          Text(
+            // 'Description here is of something I am yet to understand but i must in order to complete the project. I am working although but the pace is not enough, but I think I will be able to sort it out.',
+            '${widget.ingeltGroupModel.description}',
             overflow: TextOverflow.ellipsis,
             maxLines: 3,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 12.0,
             ),

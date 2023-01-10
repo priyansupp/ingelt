@@ -10,9 +10,9 @@ import '../../shared/widgets/circular_pic.dart';
 import 'package:ingelt/shared/constants.dart';
 
 class AllyReqGroup extends StatefulWidget {
-  final String grpId;
+  final GroupModel groupModel;
   final bool isAlly;
-  const AllyReqGroup({Key? key, required this.grpId, required this.isAlly}) : super(key: key);
+  const AllyReqGroup({Key? key, required this.isAlly, required this.groupModel}) : super(key: key);
 
   @override
   State<AllyReqGroup> createState() => _AllyReqGroupState();
@@ -20,15 +20,6 @@ class AllyReqGroup extends StatefulWidget {
 final ProfileModel userrrrr = ProfileModel(uid: '0', name: 'Priyanshu', photoURL: 'assets/person.jpg', phone: '9643763504', email: 'priyanshu@iitg.ac.in');
 
 class _AllyReqGroupState extends State<AllyReqGroup> {
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print("ally-req-grp ${widget.grpId}");
-    context.read<GroupBloc>().add(GetGroupDetailsEvent(grpId: widget.grpId));
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +37,7 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
           color: AppThemeData.primaryAppColor,
           borderRadius: const BorderRadius.all(Radius.circular(20.0)),
         ),
-        child: BlocBuilder<GroupBloc, GroupState>(
-          builder: (context, state) {
-            if(state is GroupLoadedState) {
-              final GroupModel? groupModel = state.groupModel;
-              // print("ally-req-grp ${groupModel?.participants}");
-              return Stack(
+        child: Stack(
                 children: [
                   Container(
                     height: 120.0,
@@ -81,7 +67,7 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
                                   .width * 0.65,
                               child: Text(
                                 // 'Marketing Elites Association',
-                                groupModel!.grpName,
+                                widget.groupModel.grpName,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18.0,
@@ -100,7 +86,7 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
                                   .width * 0.65,
                               child: Text(
                                 // 'Capitalise skills and take a mover advantage in the opening fields of science...',
-                                groupModel.description,
+                                widget.groupModel.description,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 15.0,
@@ -154,7 +140,7 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
                         ),
 
                         Text(
-                          '${groupModel.participants.length} joined',
+                          '${widget.groupModel.participants.length} joined',
                           style: const TextStyle(
                               fontSize: 13.0,
                               fontWeight: FontWeight.w600,
@@ -181,7 +167,7 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              groupModel.date,
+                              widget.groupModel.date,
                               style: TextStyle(
                                   color: AppThemeData.blackishTextColor,
                                   fontWeight: FontWeight.w600,
@@ -197,7 +183,7 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
                               ),
                             ),
                             Text(
-                              groupModel.time,
+                              widget.groupModel.time,
                               style: TextStyle(
                                   color: AppThemeData.blackishTextColor,
                                   fontWeight: FontWeight.w600,
@@ -209,18 +195,9 @@ class _AllyReqGroupState extends State<AllyReqGroup> {
                     ),
                   )
                 ],
-              );
-            } else if (state is GroupLoadingState) {
-              return const CircularProgressIndicator();
-            } else if (state is GroupErrorState) {
-              return Center(child: Text(state.error),);
-            } else {
-              return const Center(child: Text("Some error occurred"),);
-            }
-          }
-        ),
-      ),
-    );
+              ),
+        )
+      );
   }
 }
 

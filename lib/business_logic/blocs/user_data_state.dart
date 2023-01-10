@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:ingelt/data/models/group_model.dart';
 
+import '../../data/models/profile_model.dart';
 import '../../data/models/user_data_model.dart';
 
 @immutable
@@ -51,8 +53,37 @@ class UserDataUpdatedState extends UserDataState {
 class UserDataErrorState extends UserDataState {
   final String error;
   UserDataErrorState({required this.error});
-@override
-// TODO: implement props
-List<Object?> get props => [error];
+  @override
+  // TODO: implement props
+  List<Object?> get props => [error];
 
 }
+
+
+class ConnectionsRequestedFromLoaded extends UserDataState {
+  final List<ProfileModel>? connectionsRequestedFrom;
+  ConnectionsRequestedFromLoaded({required this.connectionsRequestedFrom});
+  @override
+// TODO: implement props
+  List<Object?> get props => [connectionsRequestedFrom];
+
+}
+
+
+
+class SpecificGroupsLoadedState extends UserDataState {
+  final List<GroupModel>? specificGroups;
+  SpecificGroupsLoadedState({required this.specificGroups});
+  @override
+// TODO: implement props
+  List<Object?> get props => [specificGroups];
+
+}
+
+class SpecificGroupsLoadingState extends UserDataState {
+  @override
+// TODO: implement props
+  List<Object?> get props => [];
+
+}
+

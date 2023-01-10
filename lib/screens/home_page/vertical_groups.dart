@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ingelt/business_logic/blocs/user_data_bloc.dart';
@@ -14,12 +13,9 @@ import '../../data/models/profile_model.dart';
 import '../../shared/widgets/show_group.dart';
 
 class VerGroup extends StatefulWidget {
-  // final String date, desc, category, admin, adminDesc;
   final bool onHomePage;
-  final GroupModel? grpModel;
-  const VerGroup({Key? key,
-    // required this.date, required this.desc, required this.category, required this.admin, required this.adminDesc,
-  required this.onHomePage, required this.grpModel}) : super(key: key);
+  final GroupModel grpModel;
+  const VerGroup({Key? key, required this.onHomePage, required this.grpModel}) : super(key: key);
 
   @override
   State<VerGroup> createState() => _VerGroupState();
@@ -35,8 +31,8 @@ class _VerGroupState extends State<VerGroup> {
 
   @override
   void initState() {
-    context.read<ProfileBloc>().add(GetProfileEvent(uid: widget.grpModel!.grpAdmin));
-    context.read<UserDataBloc>().add(GetUserDataEvent(uid: widget.grpModel!.grpAdmin));
+    context.read<ProfileBloc>().add(GetProfileEvent(uid: widget.grpModel.grpAdmin));
+    context.read<UserDataBloc>().add(GetUserDataEvent(uid: widget.grpModel.grpAdmin));
     // TODO: implement initState
     super.initState();
   }
@@ -79,17 +75,17 @@ class _VerGroupState extends State<VerGroup> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-                '| ${widget.grpModel?.date}',
+                '| ${widget.grpModel.date}',
               style: customStyle.copyWith(fontSize: 15.0, fontWeight: FontWeight.w400),
             ),
             const SizedBox(height: 3.0,),
             Text(
-                '${widget.grpModel?.description}',
+                '${widget.grpModel.description}',
               maxLines: 2,
               style: customStyle.copyWith(fontSize: 15.0, fontWeight: FontWeight.w700, overflow: TextOverflow.ellipsis,),
             ),
             Text(
-                '${widget.grpModel?.category}',
+                '${widget.grpModel.category}',
               style: customStyle.copyWith(fontSize: 12.0, fontWeight: FontWeight.w400, letterSpacing: 1.0),
             ),
             const SizedBox(height: 3.0,),

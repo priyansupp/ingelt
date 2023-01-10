@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ingelt/screens/authentication/auth_route.dart';
+import 'package:ingelt/screens/authentication/verify_email.dart';
 import 'package:ingelt/screens/routing.dart';
 import 'package:ingelt/shared/widgets/loading.dart';
 
@@ -32,9 +33,10 @@ class Wrapper extends StatelessWidget {
                 // print(snapshot.data?.displayName);
                 // print(snapshot.data?.photoURL);
                 context.read<ProfileBloc>().add(SaveProfileInfoEvent(photoURL: snapshot.data!.photoURL, email: snapshot.data!.email!, name: snapshot.data!.displayName!, phone: null, location: null, skill: null, designation: null, company: null, website: null, university: null));
-              } else if (currentUser!.providerData[0].providerId == 'password') {
+              } else if (currentUser.providerData[0].providerId == 'password') {
 
                 context.read<ProfileBloc>().add(SaveProfileInfoEvent(photoURL: null, email: currentUser.providerData[0].email!, name: "", phone: null, location: null, skill: null, designation: null, company: null, website: null, university: null));
+                return const VerifyEmailPage();
             }
                return const BottomRouting();
             }

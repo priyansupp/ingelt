@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ingelt/business_logic/blocs/user_data_event.dart';
 import 'package:ingelt/business_logic/blocs/user_data_state.dart';
+import 'package:ingelt/data/models/group_model.dart';
+import '../../data/models/profile_model.dart';
 import '../../data/models/user_data_model.dart';
 import '../../data/repositories/user_data_repo.dart';
 
@@ -77,6 +79,28 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
       try {
         final UserDataModel? userDataModel = await userDataRepository.setRequestedTo(event.requestedTo);
         emit(UserDataLoadedState(userDataModel: userDataModel));
+      } catch(e) {
+        emit(UserDataErrorState(error: e.toString()));
+      }
+    });
+
+
+    on<GetConnectionsRequestedFromEvent> ((event, emit) async {
+      emit(UserDataLoadingState());
+      try {
+        final List<ProfileModel>? connectionsRequestedFrom = await userDataRepository.getConnectionsRequestedFrom(event.uid);
+        emit(ConnectionsRequestedFromLoaded(connectionsRequestedFrom: connectionsRequestedFrom));
+      } catch(e) {
+        emit(UserDataErrorState(error: e.toString()));
+      }
+    });
+
+
+    on<GetSpecificGroupsEvent> ((event, emit) async {
+      emit(SpecificGroupsLoadingState());
+      try {
+        final List<GroupModel>? specificGroups = await userDataRepository.getSpecificGroups(event.uid);
+        emit(SpecificGroupsLoadedState(specificGroups: specificGroups));
       } catch(e) {
         emit(UserDataErrorState(error: e.toString()));
       }

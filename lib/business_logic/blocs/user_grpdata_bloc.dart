@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ingelt/business_logic/blocs/user_grpdata_event.dart';
 import 'package:ingelt/business_logic/blocs/user_grpdata_state.dart';
 import 'package:ingelt/data/models/user_grpdata_model.dart';
 
 import '../../data/models/group_model.dart';
+import '../../data/models/profile_model.dart';
 import '../../data/repositories/user_grpdata_repo.dart';
 
 class UserGrpDataBloc extends Bloc<UserGrpDataEvent, UserGrpDataState> {
@@ -90,19 +92,40 @@ class UserGrpDataBloc extends Bloc<UserGrpDataEvent, UserGrpDataState> {
       }
     });
 
-    on<GetPreviousGroupsListEvent>((event, emit) async {
-      emit(UserGrpDataLoadingState());
+
+    on<GetRequestedToGroupsEvent>((event, emit) async {
+      emit(RequestedToGroupsLoading());
       try {
-        List<GroupModel>? previousGroups = await userGrpDataRepository.getPreviousGroupsList(event.uid);
-        if(previousGroups == null || previousGroups == []) {
-          emit(UserGrpDataErrorState(error: "No previous groups found"));
-          return;
-        }
-        emit(PreviousGroupsLoadedState(previousGroups: previousGroups));
+        List<GroupModel>? requestedToGroups = await userGrpDataRepository.getRequestedToGroups(event.uid);
+        emit(RequestedToGroupsLoaded(requestedToGroups: requestedToGroups));
       } catch(e) {
         emit(UserGrpDataErrorState(error: e.toString()));
       }
     });
+
+    on<GetAllyGroupsEvent>((event, emit) async {
+      emit(AllyGroupsLoading());
+      try {
+        List<GroupModel>? allyGroups = await userGrpDataRepository.getAllyGroups(event.uid);
+        emit(AllyGroupsLoaded(allyGroups: allyGroups));
+      } catch(e) {
+        emit(UserGrpDataErrorState(error: e.toString()));
+      }
+    });
+
+    // requests from userIDs waiting to join the  group created by current user.
+    on<GetRequestsFromEvent>((event, emit) async {
+      emit(UserGrpDataLoadingState());
+      try {
+        List<ProfileModel>? requestedProfiles = await userGrpDataRepository.getRequestsFrom(event.uid);
+        emit(RequestsFromLoaded(requestedProfiles: requestedProfiles));
+      } catch(e) {
+        emit(UserGrpDataErrorState(error: e.toString()));
+      }
+    });
+
+
+
 
   }
 

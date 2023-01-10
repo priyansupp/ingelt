@@ -71,15 +71,6 @@ class AddToRequestsFromListEvent extends UserGrpDataEvent {
 
 }
 
-class GetPreviousGroupsListEvent extends UserGrpDataEvent {
-  final String uid;
-  GetPreviousGroupsListEvent({required this.uid});
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [uid];
-
-}
 
 class CreateEmptyUserGrpDataEvent extends UserGrpDataEvent {
   // final String uid;
@@ -90,3 +81,31 @@ class CreateEmptyUserGrpDataEvent extends UserGrpDataEvent {
 
 }
 
+
+class GetRequestedToGroupsEvent extends UserGrpDataEvent {
+  final String uid;
+  GetRequestedToGroupsEvent({required this.uid});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [uid];
+
+}
+
+
+class GetAllyGroupsEvent extends UserGrpDataEvent {
+  final String uid;
+  GetAllyGroupsEvent({required this.uid});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [uid];
+
+}
+
+class GetRequestsFromEvent extends UserGrpDataEvent {
+  final String uid;
+  GetRequestsFromEvent({required this.uid});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [uid];
+
+}

@@ -25,7 +25,7 @@ class _CreateGroupMainPageState extends State<CreateGroupMainPage> with TickerPr
 
   @override
   void initState() {
-    context.read<UserGrpDataBloc>().add(GetUserGrpDataEvent(uid: currentUser.uid));
+    // context.read<UserGrpDataBloc>().add(GetUserGrpDataEvent(uid: currentUser.uid));
     _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
@@ -123,30 +123,17 @@ class _CreateGroupMainPageState extends State<CreateGroupMainPage> with TickerPr
           ),
         ),
 
-        BlocBuilder<UserGrpDataBloc, UserGrpDataState>(
-          builder: (context, state) {
-            if(state is UserGrpDataLoadedState) {
-              UserGrpDataModel? userGrpDataModel = state.userGrpDataModel;
-              return Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: <Widget>[
-                    userGrpDataModel != null ? Admin(userGrpDataModel: userGrpDataModel,)  : const SizedBox.shrink(),
-                    userGrpDataModel != null ? Ally(userGrpDataModel: userGrpDataModel) : const SizedBox.shrink(),
-                    userGrpDataModel != null ? Request(userGrpDataModel: userGrpDataModel) : const SizedBox.shrink(),
-                  ],
-                ),
-              );
-            } else if(state is UserGrpDataLoadingState) {
-              return const CircularProgressIndicator();
-            } else if(state is UserGrpDataErrorState){
-              return Center(child: Text(state.error),);
-            } else {
-              // print(state);
-              return const Center(child: Text("Some2 error occurred"),);
-            }
-          }
-        ),
+
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: const <Widget>[
+                Admin(),
+                Ally(),
+                Request(),
+              ],
+            ),
+          )
       ],
     );
   }

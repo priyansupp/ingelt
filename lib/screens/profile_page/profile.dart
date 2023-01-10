@@ -71,77 +71,121 @@ class _ProfileState extends State<Profile> {
                             height: 185.0,
                             width: MediaQuery.of(context).size.width,
                             // color: Colors.blue,
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  height: 120.0,
-                                  width: MediaQuery.of(context).size.width,
-                                  color: Colors.red,
-                                ),
-                                Positioned(
-                                    top: 60.0,
-                                    left: 18.0,
-                                    child: BlocBuilder<ProfileBloc, ProfileState>(
-                                      builder: (context, state) {
-                                        if(state is ProfileLoadedState) {
-                                          print("Loaded profile");
-                                          // ProfileModel? profileModel = state.profileModel;
-                                          ProfileModel? profileModel = state.profileModel;
-                                          return CircleAvatar(
-                                            backgroundColor: Colors.white,
-                                            radius: 60.0,
-                                            child: profileModel!.photoURL != null ?
-                                            ClipOval(
-                                              child: Image.network(
-                                                profileModel.photoURL!,
-                                                width: 115.0,
-                                                height: 115.0,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            )
-                                                :
-                                            // const SizedBox.shrink()
-                                            Icon(
-                                              Icons.photo_camera,
-                                              color: AppThemeData
-                                                  .blackishTextColor,
-                                              size: 70.0,
+                            child: BlocBuilder<ProfileBloc, ProfileState>(
+                            builder: (context, state) {
+                              if (state is ProfileLoadedState) {
+                                print("Loaded profile");
+                                // ProfileModel? profileModel = state.profileModel;
+                                ProfileModel? profileModel = state.profileModel;
+                                String imageLink = "assets/bgImages/img";
+                                if(profileModel?.skill == "Skill 1") {
+                                  imageLink += "1.jpg";
+                                } else if(profileModel?.skill == "Skill 2") {
+                                  imageLink += "2.jpg";
+                                } else if(profileModel?.skill == "Skill 3") {
+                                  imageLink += "3.jpg";
+                                } else if(profileModel?.skill == "Skill 4") {
+                                  imageLink += "4.jpg";
+                                } else if(profileModel?.skill == "Skill 5") {
+                                  imageLink += "5.jpg";
+                                } else {
+                                  imageLink += "0.jpg";
+                                }
+                                print(imageLink);
+
+                                return Stack(
+                                  children: <Widget>[
+                                    Container(
+                                      height: 120.0,
+                                      width: MediaQuery
+                                          .of(context)
+                                          .size
+                                          .width,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                              imageLink,
                                             ),
-                                          );
-                                        } else if (state is ProfileLoadingState) {
-                                          print("Loading profile");
-                                          return const CircularProgressIndicator();
-                                        } else if(state is ProfileErrorState){
-                                          print("Error in loading profile");
-                                          return Center(child: Text(state.error),);
-                                        } else {
-                                          return const Center(child: Text("Some error occurred1"),);
-                                        }
-                                      }
+                                            opacity: 1,
+                                            fit: BoxFit.cover
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                        top: 60.0,
+                                        left: 18.0,
+                                        child: CircleAvatar(
+                                                  backgroundColor: Colors.white,
+                                                  radius: 60.0,
+                                                  child: profileModel!
+                                                      .photoURL != null ?
+                                                  ClipOval(
+                                                    child: Image.network(
+                                                      profileModel.photoURL!,
+                                                      width: 115.0,
+                                                      height: 115.0,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  )
+                                                      :
+                                                  // const SizedBox.shrink()
+                                                  Icon(
+                                                    Icons.photo_camera,
+                                                    color: AppThemeData
+                                                        .blackishTextColor,
+                                                    size: 70.0,
+                                                  ),
+                                                )
+                                        ),
+
+                                    Positioned(
+                                      left: 125.0,
+                                      top: 145.0,
+                                      child: rating >= 95
+                                          ? const Icon(
+                                        Icons.verified, color: Colors.blue,)
+                                          : Transform.scale(scale: 0.6,
+                                          child: Rating(percentage: rating)),
+                                    ),
+
+                                    Positioned(
+                                        top: 120.0,
+                                        right: 10.0,
+                                        child: IconButton(
+                                          icon: const Icon(Icons.settings),
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                                builder: (
+                                                    context) => const EditProfile()))
+                                                .then((value) =>
+                                            {
+                                              context.read<ProfileBloc>().add(
+                                                  GetProfileEvent(
+                                                      uid: currentUser.uid)),
+                                              // context.read<UserDataBloc>().add(GetUserDataEvent(uid: currentUser.uid)),
+                                            });
+                                          },
+                                          iconSize: 28.0,
+                                        )
                                     )
-                                ),
-
-                                Positioned(
-                                  left: 125.0,
-                                  top: 145.0,
-                                  child: rating >= 95 ? const Icon(Icons.verified, color: Colors.blue,) : Transform.scale(scale: 0.6, child: Rating(percentage: rating)),
-                                ),
-
-                                Positioned(
-                                  top: 120.0,
-                                  right: 10.0,
-                                  child: IconButton(
-                                    icon: const Icon(Icons.settings),
-                                    onPressed: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const EditProfile())).then((value) => {
-                                        context.read<ProfileBloc>().add(GetProfileEvent(uid: currentUser.uid)),
-                                        // context.read<UserDataBloc>().add(GetUserDataEvent(uid: currentUser.uid)),
-                                      });
-                                    },
-                                    iconSize: 28.0,
-                                  )
-                                )
-                              ],
+                                  ],
+                                );
+                            } else
+                            if (state is ProfileLoadingState) {
+                              print("Loading profile");
+                              return const CircularProgressIndicator();
+                              } else
+                              if (state is ProfileErrorState) {
+                              print(
+                              "Error in loading profile");
+                              return Center(
+                              child: Text(state.error),);
+                              } else {
+                              return const Center(child: Text(
+                              "Some error occurred1"),);
+                              }
+                            }
                             ),
                           ),
                           BlocBuilder<ProfileBloc, ProfileState>(

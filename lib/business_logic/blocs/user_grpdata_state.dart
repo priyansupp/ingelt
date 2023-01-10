@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../data/models/group_model.dart';
+import '../../data/models/profile_model.dart';
 import '../../data/models/user_grpdata_model.dart';
 
 @immutable
@@ -57,13 +58,48 @@ class UserGrpDataErrorState extends UserGrpDataState {
 
 }
 
-class PreviousGroupsLoadedState extends UserGrpDataState {
-  final List<GroupModel> previousGroups;
-  PreviousGroupsLoadedState({required this.previousGroups});
 
+class RequestedToGroupsLoaded extends UserGrpDataState {
+  final List<GroupModel>? requestedToGroups;
+  RequestedToGroupsLoaded({required this.requestedToGroups});
   @override
   // TODO: implement props
-  List<Object?> get props => [previousGroups];
+  List<Object?> get props => [requestedToGroups];
+
+}
+
+class AllyGroupsLoaded extends UserGrpDataState {
+  final List<GroupModel>? allyGroups;
+  AllyGroupsLoaded({required this.allyGroups});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [allyGroups];
+
+}
+
+
+class RequestedToGroupsLoading extends UserGrpDataState {
+  @override
+// TODO: implement props
+  List<Object?> get props => [];
+
+}
+
+class AllyGroupsLoading extends UserGrpDataState {
+  @override
+// TODO: implement props
+  List<Object?> get props => [];
+
+}
+
+
+class RequestsFromLoaded extends UserGrpDataState {
+  final List<ProfileModel>? requestedProfiles;
+  RequestsFromLoaded({required this.requestedProfiles});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [requestedProfiles];
+
 }
 
 

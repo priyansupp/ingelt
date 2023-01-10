@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ingelt/business_logic/blocs/group_event.dart';
 import 'package:ingelt/screens/home_page/vertical_groups.dart';
-
 import '../../business_logic/blocs/group_bloc.dart';
 import '../../business_logic/blocs/group_state.dart';
 import '../../data/models/group_model.dart';
@@ -37,10 +35,11 @@ class _FetchGeneralState extends State<FetchGeneral> {
           if(state is GeneralGroupsLoaded) {
             List<GroupModel>? generalGroups = state.generalGroups;
             if(generalGroups!.isEmpty) return const SizedBox.shrink();
+            // print(generalGroups.runtimeType);
+            // print("hiiiiiiiiiiii");
             return ListView.builder(
               itemBuilder: (context, index) {
                 return VerGroup(
-                  // date: '22nd July 2022', desc: "Ather's smart electric scooters with best-in-class settings to deal with.", category: 'Automobile', admin: 'Priyanshu Jaiswal', adminDesc: 'An aspiring app developer, and a web developer in making',
                   grpModel: generalGroups[index],
                   onHomePage: true,);
               },

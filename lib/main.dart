@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ingelt/business_logic/blocs/group_bloc.dart';
+import 'package:ingelt/business_logic/blocs/ingelt_group_event.dart';
+import 'package:ingelt/business_logic/blocs/previous_groups_bloc.dart';
 import 'package:ingelt/business_logic/blocs/profile_bloc.dart';
 import 'package:ingelt/business_logic/blocs/user_data_bloc.dart';
 import 'package:ingelt/business_logic/blocs/user_grpdata_bloc.dart';
 import 'package:ingelt/business_logic/utility/app_bloc_observer.dart';
 import 'package:ingelt/data/repositories/group_repo.dart';
+import 'package:ingelt/data/repositories/ingelt_group_repo.dart';
+import 'package:ingelt/data/repositories/previous_groups_repo.dart';
 import 'package:ingelt/data/repositories/profile_repo.dart';
 import 'package:ingelt/data/repositories/user_data_repo.dart';
 import 'package:ingelt/data/repositories/user_grpdata_repo.dart';
@@ -14,6 +18,8 @@ import 'package:ingelt/screens/authentication/google_signin.dart';
 import 'package:ingelt/shared/utils.dart';
 import 'package:ingelt/wrapper.dart';
 import 'package:provider/provider.dart';
+
+import 'business_logic/blocs/ingelt_group_bloc.dart';
 
 
 
@@ -37,7 +43,8 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(create: (context) => UserDataRepository()),
         RepositoryProvider(create: (context) => UserGrpDataRepository()),
         RepositoryProvider(create: (context) => GroupRepository()),
-
+        RepositoryProvider(create: (context) => PreviousGroupsRepository()),
+        RepositoryProvider(create: (context) => IngeltGroupRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -45,6 +52,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<UserDataBloc>(create: (BuildContext context) => UserDataBloc(userDataRepository: RepositoryProvider.of<UserDataRepository>(context))),
           BlocProvider<UserGrpDataBloc>(create: (BuildContext context) => UserGrpDataBloc(userGrpDataRepository: RepositoryProvider.of<UserGrpDataRepository>(context))),
           BlocProvider<GroupBloc>(create: (BuildContext context) => GroupBloc(groupRepository: RepositoryProvider.of<GroupRepository>(context))),
+          BlocProvider<PreviousGroupsBloc>(create: (BuildContext context) => PreviousGroupsBloc(previousGroupsRepository: RepositoryProvider.of<PreviousGroupsRepository>(context))),
+          BlocProvider<IngeltGroupBloc>(create: (BuildContext context) => IngeltGroupBloc(ingeltGroupRepository: RepositoryProvider.of<IngeltGroupRepository>(context))),
+
         ],
         child: ChangeNotifierProvider(
             create: (context) => GoogleSignInProvider(),
